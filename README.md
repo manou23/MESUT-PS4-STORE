@@ -57,16 +57,17 @@ The goal is to bring discovery, organization, and authorized package management 
 
 ## 🧭 Content sources
 
-### PSPKG catalogue reference
+### Brewology PS4 Homebrew catalogue
 
-[![Visit PSPKG](https://img.shields.io/badge/PSPKG-OPEN%20WEBSITE-26364F?style=for-the-badge)](https://pspkg.com/)
+[![Browse PS4 Homebrew](https://img.shields.io/badge/BREWOLOGY-PS4%20HOMEBREW%20GAMES-26364F?style=for-the-badge)](https://store.brewology.com/ps4/games/)
 
-PSPKG is listed as an external catalogue reference. The catalogue also includes official PlayStation Store references for commercial PS4 titles such as EA SPORTS FC 27, Grand Theft Auto V, Red Dead Redemption 2, and God of War Ragnarök. The library can provide a clearly labelled link to the source website and, where permitted, display independently verified catalogue metadata. A website listing alone does not prove that a commercial game package is authorized for redistribution.
+Brewology is the curated external source currently used for the project's PS4 homebrew game listings. MESUT PS4 STORE includes selected game metadata and links to each upstream listing, including version, package format, developer, and whether separate original game data is required.
 
-**Direct package downloads inside MESUT PS4 STORE will be enabled only for homebrew, publisher-authorized files, or packages supplied by users who have the necessary rights.** The project will not mirror unauthorized commercial games, defeat access controls, or automate protected download flows.
+The commercial-game discovery shelf uses official [PlayStation Store](https://store.playstation.com/) references for titles such as EA SPORTS FC 27, Grand Theft Auto V, Red Dead Redemption 2, and God of War Ragnarök. These are discovery links, not third-party PKG download sources.
 
-Read the [content and source policy](docs/CONTENT_POLICY.md) and [PSPKG integration notes](docs/PSPKG_INTEGRATION.md).
+**Direct package downloads inside MESUT PS4 STORE will be enabled only for homebrew, publisher-authorized files, or packages supplied by users who have the necessary rights.** A listing or a working PKG on modified hardware does not by itself establish permission to redistribute a commercial game.
 
+Read the [content and source policy](docs/CONTENT_POLICY.md) and [Brewology integration notes](docs/BREWOLOGY_INTEGRATION.md).
 ## 🎨 Design direction
 
 - Midnight navy interface with PlayStation-blue accents.
@@ -97,7 +98,7 @@ Read the [content and source policy](docs/CONTENT_POLICY.md) and [PSPKG integrat
 ├── docs/
 │   ├── ARCHITECTURE.md
 │   ├── CONTENT_POLICY.md
-│   ├── PSPKG_INTEGRATION.md
+│   ├── BREWOLOGY_INTEGRATION.md
 │   └── ROADMAP.md
 ├── assets/
 ├── CHANGELOG.md
