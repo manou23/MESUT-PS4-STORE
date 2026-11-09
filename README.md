@@ -2,99 +2,142 @@
 
 # 🎮 MESUT PS4 STORE
 
-**A PlayStation Store-inspired native homebrew library for PS4**
+### YOUR CONSOLE. YOUR LIBRARY. YOUR EXPERIENCE.
 
-[![Version](https://img.shields.io/badge/version-1.0.0-0070d1?style=for-the-badge)](CHANGELOG.md)
-[![Platform](https://img.shields.io/badge/platform-PS4-111111?style=for-the-badge&logo=playstation)](#)
-[![Language](https://img.shields.io/badge/language-English%20preview%20%7C%20Arabic%20planned-16a34a?style=for-the-badge)](#)
+**A native, controller-first homebrew library for PlayStation 4**
 
-*Discover, organize, and manage homebrew and authorized packages directly from your console.*
+[![Version](https://img.shields.io/badge/version-1.0.0-0878D1?style=for-the-badge)](CHANGELOG.md)
+[![Platform](https://img.shields.io/badge/platform-PLAYSTATION%204-151B2B?style=for-the-badge)](#)
+[![Build](https://img.shields.io/github/actions/workflow/status/manou23/MESUT-PS4-STORE/build-ps4.yml?branch=main&style=for-the-badge&label=BUILD)](https://github.com/manou23/MESUT-PS4-STORE/actions/workflows/build-ps4.yml)
+[![License](https://img.shields.io/badge/license-MIT-2E9D69?style=for-the-badge)](LICENSE)
+
+[**⬇ DOWNLOAD LIBRARY**](https://github.com/manou23/MESUT-PS4-STORE/releases/latest)　|　[BUILD STATUS](https://github.com/manou23/MESUT-PS4-STORE/actions)　|　[CHANGELOG](CHANGELOG.md)
 
 </div>
 
 ---
 
-## ✨ Product vision
+## ✦ About the project
 
-A native PS4 application with a polished, TV-first interface inspired by the PlayStation Store: dark surfaces, PlayStation-blue accents, large featured panels, category shelves, and DualShock navigation.
+**MESUT PS4 STORE** is being developed as a dedicated PS4 homebrew library, designed around the comfort of the television screen and DualShock 4 controller. Its visual direction takes inspiration from the PlayStation Store: deep midnight surfaces, electric-blue highlights, featured content panels, and clean category shelves.
 
-### Planned experience
-- Native PS4 application, not a web page.
-- DualShock 4 navigation and clear focus states.
-- Arabic RTL and English LTR interface.
-- Separate Homebrew, Tools, Themes, and Applications sections.
-- Search, favorites, recent items, and item details.
-- Package provenance, version, size, checksum, and compatibility information.
-- Download queue for packages the user is authorized to obtain.
+The goal is to bring discovery, organization, and authorized package management together in one native console experience.
 
-## 🧪 Current development status
+## ↓ Download MESUT PS4 STORE
 
-**Release line: 1.0.0 — native preview foundation**
+<div align="center">
 
-| Component | Status |
+### MESUT PS4 STORE · Latest Release
+
+**The official download area for published PKG builds**
+
+[![Get the latest version](https://img.shields.io/badge/GET%20THE%20LATEST%20PKG-OPEN%20DOWNLOADS-0878D1?style=for-the-badge&logo=playstation)](https://github.com/manou23/MESUT-PS4-STORE/releases/latest)
+
+[Open all releases](https://github.com/manou23/MESUT-PS4-STORE/releases) · [View automated build artifacts](https://github.com/manou23/MESUT-PS4-STORE/actions/workflows/build-ps4.yml)
+
+> **Release availability:** The download link above always points to the latest GitHub Release. A PKG is not considered ready until a build has succeeded and its package has been checked. Until then, the page may show that no stable release is published.
+
+</div>
+
+## ✨ Experience & features
+
+| Feature | Development status |
 |---|---|
-| Repository architecture and policy | Added |
-| Native SDL2 interface source | Added |
-| Controller input foundation | Added |
-| OpenOrbis build workflow | Added; first run in progress |
-| Verified installable PKG | Not yet confirmed |
-| Arabic RTL rendering | Planned |
-| Live catalogue and search | Planned |
-| Authorized package queue | Planned |
-| Real-console testing | Pending |
+| Native PS4 application foundation | In development |
+| TV-first 1920 × 1080 interface | Initial UI added |
+| DualShock 4 navigation | Basic input foundation added |
+| Homebrew, tools and themes categories | UI foundation added |
+| Game catalogue, search and details | Planned |
+| Favorites and download queue | Planned |
+| Arabic RTL + English interface | Planned |
+| Authorized PKG download manager | Planned |
+| Package verification and integrity checks | Planned |
 
-The first native screen currently provides a visual store shell and category navigation. The first automated build is being evaluated. This is not yet a verified installable release.
+## 🧭 Content sources
 
-## 📦 Content sources and rights
+### PSPKG catalogue reference
 
-[PSPKG](https://pspkg.com/) was suggested as a catalogue reference. Its listings may include commercial game packages. A listing does not establish permission to download or redistribute that content.
+[![Visit PSPKG](https://img.shields.io/badge/PSPKG-OPEN%20WEBSITE-26364F?style=for-the-badge)](https://pspkg.com/)
 
-MESUT PS4 STORE will support:
-1. Homebrew and tools whose authors permit distribution.
-2. Packages supplied by the user or an authorized publisher.
-3. Catalogue metadata and artwork only where their use is permitted.
+PSPKG is listed as an external catalogue reference. The library can provide a clearly labelled link to the source website and, where permitted, display independently verified catalogue metadata. A website listing alone does not prove that a commercial game package is authorized for redistribution.
 
-The app will not mirror unauthorized commercial game packages, bypass DRM, or automate access to protected download pages.
+**Direct package downloads inside MESUT PS4 STORE will be enabled only for homebrew, publisher-authorized files, or packages supplied by users who have the necessary rights.** The project will not mirror unauthorized commercial games, defeat access controls, or automate protected download flows.
 
-## 🛠️ Technology
+Read the [content and source policy](docs/CONTENT_POLICY.md) and [PSPKG integration notes](docs/PSPKG_INTEGRATION.md).
 
-- **Native UI:** C++ and SDL2.
-- **PS4 toolchain:** [OpenOrbis PS4 Toolchain](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain).
-- **Build:** GitHub Actions with a reproducible toolchain setup.
-- **Catalogue:** versioned JSON manifest with source and rights metadata.
+## 🎨 Design direction
 
-## 📁 Repository structure
+- Midnight navy interface with PlayStation-blue accents.
+- Large featured area and clear content shelves.
+- Focus states designed for controller navigation.
+- Readable typography and consistent spacing.
+- Arabic right-to-left and English left-to-right layouts as the language system is implemented.
+
+## 🧱 Technology
+
+- **Application:** C++
+- **Rendering and input:** SDL2
+- **PS4 homebrew toolchain:** [OpenOrbis PS4 Toolchain](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain)
+- **Build automation:** GitHub Actions
+- **Catalogue format:** Versioned JSON manifest
+
+## 📦 Project structure
 
 ```
 .
-├── .github/workflows/build-ps4.yml
-├── app/
-│   ├── MESUTPS4Store/main.cpp
-│   ├── Makefile
-│   └── sce_sys/
-├── assets/
-├── data/catalog.json
+├── .github/workflows/       # Automated PS4 build
+├── app/                     # Native PS4 application
+│   ├── MESUTPS4Store/
+│   ├── sce_sys/
+│   └── Makefile
+├── data/
+│   └── catalog.json         # Catalogue manifest
 ├── docs/
-├── src/
+│   ├── ARCHITECTURE.md
+│   ├── CONTENT_POLICY.md
+│   ├── PSPKG_INTEGRATION.md
+│   └── ROADMAP.md
+├── assets/
 ├── CHANGELOG.md
 ├── CONTRIBUTING.md
 └── LICENSE
 ```
 
-## 🚀 Build artifacts
+## 🛠️ Build status
 
-When the GitHub Actions build succeeds, the PKG will be published as a workflow artifact and later attached to a GitHub Release after validation.
+Every code change can be built through [GitHub Actions](https://github.com/manou23/MESUT-PS4-STORE/actions/workflows/build-ps4.yml). Successful workflow artifacts are temporary CI outputs; stable user downloads will be published through GitHub Releases after validation.
 
-[View build workflow](https://github.com/manou23/MESUT-PS4-STORE/actions/workflows/build-ps4.yml) · [View releases](https://github.com/manou23/MESUT-PS4-STORE/releases)
+**Current release line:** 1.0.0 — development foundation.
 
-## ⚠️ Compatibility
+- [View latest workflow run](https://github.com/manou23/MESUT-PS4-STORE/actions)
+- [Download published releases](https://github.com/manou23/MESUT-PS4-STORE/releases)
+- [Report a build issue](https://github.com/manou23/MESUT-PS4-STORE/issues)
 
-Compatibility depends on firmware, jailbreak environment, and the final build. No firmware support is claimed until tested on real hardware.
+## ⚠️ Compatibility & installation
+
+This project is intended for compatible PS4 homebrew environments. Firmware compatibility, installation behavior, and controller support must be verified on real hardware before being advertised as supported. Do not assume that every modified PS4 firmware is compatible.
+
+## 🗺️ Roadmap
+
+1. Stabilize the OpenOrbis build pipeline and produce a verified PKG.
+2. Complete category screens, focus handling, and controller navigation.
+3. Implement catalogue parsing, search, and item details.
+4. Add an authorized package download queue with progress and integrity checks.
+5. Add Arabic shaping/RTL support and English localization.
+6. Test installation and runtime behavior on supported PS4 hardware.
 
 ## 🤝 Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+Bug reports, tested fixes, and improvements are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting changes.
 
 ---
 
-<div align="center">**MESUT PS4 STORE · Built for the homebrew community**</div>
+<div align="center">
+
+**MESUT PS4 STORE**
+
+*Made for the console. Built for the community.*
+
+[GitHub Repository](https://github.com/manou23/MESUT-PS4-STORE) · [Releases](https://github.com/manou23/MESUT-PS4-STORE/releases) · [Issues](https://github.com/manou23/MESUT-PS4-STORE/issues)
+
+</div>
