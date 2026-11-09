@@ -74,6 +74,7 @@ jobs:
       - name: Build native application and package
         working-directory: app
         run: |
+          python3 ../tools/generate_catalog.py ../data/catalog.json MESUTPS4Store/catalog_generated.h
           make clean
           make
           test -s "IV0000-MSTP00001_00-MESUTPS4STORE001.pkg"
