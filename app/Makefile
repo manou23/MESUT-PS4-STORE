@@ -21,8 +21,7 @@ eboot.bin: $(INTDIR)/main.o
 	$(LD) $^ -o $(INTDIR)/MESUTPS4Store.elf $(LDFLAGS)
 	$(TOOLCHAIN)/bin/linux/create-fself -in=$(INTDIR)/MESUTPS4Store.elf -out=$(INTDIR)/MESUTPS4Store.oelf --eboot eboot.bin --paid 0x3800000000000011
 $(CONTENT_ID).pkg: eboot.bin ../data/catalog.json $(PROJDIR)/catalog_generated.h
-	mkdir -p data
-	cp ../data/catalog.json data/catalog.json
+	cp ../data/catalog.json catalog.json
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core sfo_new sce_sys/param.sfo
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core sfo_setentry sce_sys/param.sfo APP_TYPE --type Integer --maxsize 4 --value 1
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core sfo_setentry sce_sys/param.sfo APP_VER --type Utf8 --maxsize 8 --value '$(VERSION)'
@@ -32,10 +31,10 @@ $(CONTENT_ID).pkg: eboot.bin ../data/catalog.json $(PROJDIR)/catalog_generated.h
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core sfo_setentry sce_sys/param.sfo TITLE_ID --type Utf8 --maxsize 12 --value '$(TITLE_ID)'
 	mkdir -p data
 	cp ../data/catalog.json data/catalog.json
-	$(TOOLCHAIN)/bin/linux/create-gp4 -out pkg.gp4 --content-id=$(CONTENT_ID) --files "eboot.bin sce_sys/param.sfo data/catalog.json"
+	$(TOOLCHAIN)/bin/linux/create-gp4 -out pkg.gp4 --content-id=$(CONTENT_ID) --files "eboot.bin sce_sys/param.sfo catalog.json"
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core pkg_build pkg.gp4 . || { test -s '$(CONTENT_ID).pkg' || exit 1; }
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core pkg_validate '$(CONTENT_ID).pkg' > pkg-validation.log
 	cat pkg-validation.log
 	if grep -Fq '[ERROR]' pkg-validation.log; then cat pkg-validation.log; exit 1; fi
 clean:
-	rm -rf $(INTDIR) eboot.bin pkg.gp4 $(CONTENT_ID).pkg sce_sys/param.sfo data/catalog.json
+	rm -rf $(INTDIR) eboot.bin pkg.gp4 $(CONTENT_ID).pkg sce_sys/param.sfo catalog.json
