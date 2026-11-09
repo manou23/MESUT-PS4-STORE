@@ -11,14 +11,18 @@ LD          := ld.lld
 CXXFLAGS    := --target=x86_64-pc-freebsd12-elf -fPIC -funwind-tables -c -isysroot $(TOOLCHAIN) -isystem $(TOOLCHAIN)/include -isystem $(TOOLCHAIN)/include/c++/v1 -I../SDL-PS4/include
 LDFLAGS     := -m elf_x86_64 -pie --script $(TOOLCHAIN)/link.x --eh-frame-hdr -L$(TOOLCHAIN)/lib $(LIBS) $(TOOLCHAIN)/lib/crt1.o
 all: $(CONTENT_ID).pkg
+$(PROJDIR)/catalog_generated.h: ../data/catalog.json ../tools/generate_catalog.py
+	python3 ../tools/generate_catalog.py ../data/catalog.json $@
 $(INTDIR):
 	mkdir -p $(INTDIR)
-$(INTDIR)/main.o: $(PROJDIR)/main.cpp | $(INTDIR)
+$(INTDIR)/main.o: $(PROJDIR)/main.cpp $(PROJDIR)/catalog_generated.h | $(INTDIR)
 	$(CXX) $(CXXFLAGS) -o $@ $<
 eboot.bin: $(INTDIR)/main.o
 	$(LD) $^ -o $(INTDIR)/MESUTPS4Store.elf $(LDFLAGS)
 	$(TOOLCHAIN)/bin/linux/create-fself -in=$(INTDIR)/MESUTPS4Store.elf -out=$(INTDIR)/MESUTPS4Store.oelf --eboot eboot.bin --paid 0x3800000000000011
 $(CONTENT_ID).pkg: eboot.bin
+	mkdir -p data
+	cp ../data/catalog.json data/catalog.json
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core sfo_new sce_sys/param.sfo
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core sfo_setentry sce_sys/param.sfo APP_TYPE --type Integer --maxsize 4 --value 1
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core sfo_setentry sce_sys/param.sfo APP_VER --type Utf8 --maxsize 8 --value '$(VERSION)'
