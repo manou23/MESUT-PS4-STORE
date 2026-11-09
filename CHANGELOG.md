@@ -5,7 +5,12 @@ All notable changes to MESUT PS4 STORE are documented here.
 ## [1.0.0] - 2026-11-09
 
 ### Added
-- Professional project README and repository documentation.
+- Redesigned the README as a branded project landing page with a dedicated latest-release download area.
+- Added release, workflow, changelog, and issue navigation links.
+- Registered PSPKG as an external catalogue reference without enabling unauthorized direct downloads.
+- Added PSPKG integration notes and clarified third-party content authorization rules.
+- Corrected the OpenOrbis SDK extraction root and added package-tool setup to CI.
+- Professional project documentation.
 - Native C++ / SDL2 store interface foundation.
 - TV-first 1920×1080 layout with featured banner and category tiles.
 - Keyboard and joystick navigation foundation.
