@@ -9,6 +9,9 @@ All notable changes to MESUT PS4 STORE are documented here.
 - Added release, workflow, changelog, and issue navigation links.
 - Registered PSPKG as an external catalogue reference without enabling unauthorized direct downloads.
 - Added seven curated PS4 homebrew game records from Brewology, with versions, formats, requirements, and external listing links.
+- Added a commercial PS4 discovery shelf with 12 real retail titles, including EA SPORTS FC 27 and its free Lite preview, using official PlayStation Store references.
+- Added native controller-browsable Retail Games and Homebrew Games screens with title detail panels.
+- Corrected the SDL2 cross-build unwind flag for compatibility with Ubuntu Clang 14.
 - Recorded whether each title needs separately obtained game data; kept direct third-party package downloads disabled pending rights verification.
 - Added PSPKG integration notes and clarified third-party content authorization rules.
 - Corrected the OpenOrbis SDK extraction root and added package-tool setup to CI.
@@ -21,7 +24,7 @@ All notable changes to MESUT PS4 STORE are documented here.
 - Versioned catalogue manifest and content rights policy.
 
 ### In progress
-- First automated native build.
+- Automated native build and PKG validation.
 - Controller mapping validation.
 - Arabic RTL font rendering and localization.
 - Catalogue loading, search, and authorized package handling.
