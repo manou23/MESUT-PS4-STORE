@@ -29,6 +29,7 @@ $(CONTENT_ID).pkg: eboot.bin
 	$(TOOLCHAIN)/bin/linux/create-gp4 -out pkg.gp4 --content-id=$(CONTENT_ID) --files "eboot.bin sce_sys/param.sfo"
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core pkg_build pkg.gp4 . || { test -s '$(CONTENT_ID).pkg' || exit 1; }
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core pkg_validate '$(CONTENT_ID).pkg' > pkg-validation.log
-	! grep -q '\[ERROR\]' pkg-validation.log || { cat pkg-validation.log; exit 1; }
+	cat pkg-validation.log
+	! grep -Fq '[ERROR]' pkg-validation.log || { cat pkg-validation.log; exit 1; }
 clean:
 	rm -rf $(INTDIR) eboot.bin pkg.gp4 $(CONTENT_ID).pkg sce_sys/param.sfo
