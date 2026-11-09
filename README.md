@@ -21,7 +21,7 @@
 
 **MESUT PS4 STORE** is being developed as a dedicated PS4 homebrew library, designed around the comfort of the television screen and DualShock 4 controller. Its visual direction takes inspiration from the PlayStation Store: deep midnight surfaces, electric-blue highlights, featured content panels, and clean category shelves.
 
-The goal is to bring discovery, organization, and authorized package management together in one native console experience. The current native UI includes controller-browsable Retail Games and Homebrew Games shelves. The build now validates the versioned JSON catalogue, generates the native shelf title lists from it, and bundles the manifest into the PKG for the next runtime-catalogue stage.
+The goal is to bring discovery, organization, and authorized package management together in one native console experience. The current native UI includes controller-browsable Retail Games and Homebrew Games shelves. The native app now includes a runtime JSON catalogue reader for the bundled manifest. The manifest is packaged at `app0:/data/catalog.json`; the updated build is being checked before this runtime path is marked verified.
 
 ## ↓ Download MESUT PS4 STORE
 
@@ -49,8 +49,8 @@ The goal is to bring discovery, organization, and authorized package management 
 | Retail PS4 game discovery shelf | 12 curated titles generated from catalogue manifest |
 | Homebrew games shelf | 7 curated titles generated from catalogue manifest |
 | Controller-browsable game lists and detail panels | Initial native screens added |
-| Catalogue schema validation and build-time native shelf generation | Implemented |
-| Runtime JSON browsing, search and filters | Planned |
+| Runtime JSON catalogue reader and PKG manifest bundling | Implemented in source; CI verification pending |
+| Runtime JSON browsing | Implemented in source; CI verification pending |\n| Search and filters | Planned |
 | Favorites and download queue | Planned |
 | Arabic RTL + English interface | Planned |
 | Authorized PKG download manager | Planned |
