@@ -15,17 +15,7 @@ static Tile games[] = {
  {"MY PACKAGES","LOCAL FILES",{45,105,85,255}},
  {"FAVORITES","SAVED ITEMS",{150,88,30,255}}
 };
-static const char* retailGames[] = {
- "EA SPORTS FC 27", "FC 27 LITE - FREE", "GRAND THEFT AUTO V",
- "RED DEAD REDEMPTION 2", "GOD OF WAR RAGNAROK", "HORIZON FORBIDDEN WEST",
- "SPIDER-MAN MILES MORALES", "ELDEN RING", "CYBERPUNK 2077",
- "THE LAST OF US PART II", "GHOST OF TSUSHIMA", "UNCHARTED 4"
-};
-static const char* homebrewGames[] = {
- "MUNDOCRAFT", "DESCENT I + II", "ALIENS VS PREDATOR",
- "FALLOUT 2 COMMUNITY EDITION", "IOQUAKE3", "DEVILUTIONX",
- "RELIC HUNTERS ZERO"
-};
+#include "catalog_generated.h"
 static int selected=0, section=0, item=0;
 static bool detail=false;
 
