@@ -29,12 +29,10 @@ $(CONTENT_ID).pkg: eboot.bin ../data/catalog.json $(PROJDIR)/catalog_generated.h
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core sfo_setentry sce_sys/param.sfo CONTENT_ID --type Utf8 --maxsize 48 --value '$(CONTENT_ID)'
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core sfo_setentry sce_sys/param.sfo TITLE --type Utf8 --maxsize 128 --value '$(TITLE)'
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core sfo_setentry sce_sys/param.sfo TITLE_ID --type Utf8 --maxsize 12 --value '$(TITLE_ID)'
-	mkdir -p data
-	cp ../data/catalog.json data/catalog.json
 	$(TOOLCHAIN)/bin/linux/create-gp4 -out pkg.gp4 --content-id=$(CONTENT_ID) --files "eboot.bin sce_sys/param.sfo catalog.json"
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core pkg_build pkg.gp4 . || { test -s '$(CONTENT_ID).pkg' || exit 1; }
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core pkg_validate '$(CONTENT_ID).pkg' > pkg-validation.log
 	cat pkg-validation.log
 	if grep -Fq '[ERROR]' pkg-validation.log; then cat pkg-validation.log; exit 1; fi
 clean:
-	rm -rf $(INTDIR) eboot.bin pkg.gp4 $(CONTENT_ID).pkg sce_sys/param.sfo catalog.json
+	rm -rf $(INTDIR) eboot.bin pkg.gp4 $(CONTENT_ID).pkg sce_sys/param.sfo catalog.json data
