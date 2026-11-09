@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iterator>
+#include <ctime>
 
 static const int W=1920, H=1080;
 struct Tile { const char* title; const char* category; SDL_Color color; };
@@ -24,6 +25,15 @@ struct CatalogEntry { std::string id, title, type, description, url; };
 static std::vector<CatalogEntry> retailCatalog, homebrewCatalog, favoriteCatalog;
 static std::vector<std::string> favoriteIds;
 static const char* FAVORITES_FILE="/data/mesut_ps4_store_favorites.txt";
+static const char* DIAGNOSTIC_FILE="/data/mesut_ps4_store_diagnostics.log";
+static void logDiagnostic(const char* level,const std::string& message){
+ std::ofstream out(DIAGNOSTIC_FILE,std::ios::app);
+ if(!out)return;
+ std::time_t now=std::time(nullptr); std::tm* tmv=std::localtime(&now);
+ char stamp[32]="unknown-time";
+ if(tmv)std::strftime(stamp,sizeof(stamp),"%Y-%m-%d %H:%M:%S",tmv);
+ out<<"["<<stamp<<"] ["<<level<<"] "<<message<<"\n";
+}
 static std::string jsonString(const std::string& obj,const char* key){
  std::string needle(1,char(34)); needle+=key; needle+=char(34);
  size_t p=obj.find(needle); if(p==std::string::npos)return "";
@@ -35,7 +45,7 @@ static std::string jsonString(const std::string& obj,const char* key){
 }
 static void loadCatalog(){
  std::ifstream file("/app0/catalog.json");
- if(!file)return;
+ if(!file){logDiagnostic("ERROR","catalog manifest missing at /app0/catalog.json");return;}
  std::string json((std::istreambuf_iterator<char>(file)),std::istreambuf_iterator<char>());
  std::string itemsKey(1,char(34)); itemsKey+="items"; itemsKey+=char(34);
  size_t p=json.find(itemsKey); if(p==std::string::npos)return;
@@ -55,13 +65,15 @@ static void loadCatalog(){
   else if(ch==']'&&depth==0)break;
  }
 }
+ logDiagnostic("INFO",std::string("catalog loaded: retail=")+std::to_string(retailCatalog.size())+", homebrew="+std::to_string(homebrewCatalog.size()));
+}
 static void loadFavorites(){
  favoriteIds.clear(); std::ifstream in(FAVORITES_FILE); std::string id;
  while(std::getline(in,id)) if(!id.empty()&&std::find(favoriteIds.begin(),favoriteIds.end(),id)==favoriteIds.end()) favoriteIds.push_back(id);
 }
 static void saveFavorites(){
  std::ofstream out(FAVORITES_FILE,std::ios::trunc);
- if(!out)return;
+ if(!out){logDiagnostic("ERROR","cannot write favorites file");return;}
  for(const auto& id:favoriteIds) out<<id<<"\n";
 }
 static bool isFavorite(const std::string& id){return std::find(favoriteIds.begin(),favoriteIds.end(),id)!=favoriteIds.end();}
@@ -75,6 +87,7 @@ static void toggleFavorite(const CatalogEntry& e){
  auto it=std::find(favoriteIds.begin(),favoriteIds.end(),e.id);
  if(it==favoriteIds.end())favoriteIds.push_back(e.id);else favoriteIds.erase(it);
  saveFavorites(); rebuildFavorites();
+ logDiagnostic("INFO",std::string("favorite changed: ")+e.id);
 }
 static const std::vector<CatalogEntry>& catalogFor(int sec){return sec==1?retailCatalog:(sec==5?favoriteCatalog:homebrewCatalog);}
 static int countForSection(int sec){
@@ -141,7 +154,12 @@ static void render(SDL_Renderer*r){
   text(r,135,365,"MESUT STORE",4,white);
   text(r,138,455,"SECTION INITIALIZED",2,{167,205,240,255});
   text(r,138,520,note,2,muted);
-  text(r,138,625,"THIS FEATURE IS NOT ACTIVE IN BUILD 1.0.0 YET",2,muted);
+  if(section==3){
+   text(r,138,625,"LOCAL DIAGNOSTICS: ENABLED",2,{120,220,160,255});
+   text(r,138,675,"LOG: /DATA/MESUT_PS4_STORE_DIAGNOSTICS.LOG",2,muted);
+   text(r,138,725,"NO DATA IS SENT TO THE INTERNET AUTOMATICALLY",2,white);
+   text(r,138,775,"SHARE REPORTS ONLY AFTER REVIEW AND YOUR APPROVAL",2,muted);
+  }else text(r,138,625,"THIS FEATURE IS NOT ACTIVE IN BUILD 1.0.2 YET",2,muted);
   text(r,85,990,"O BACK TO CATEGORIES",2,muted);
   return;
  }
@@ -210,14 +228,15 @@ static void render(SDL_Renderer*r){
 }
 int main(int argc,char**argv){
  setvbuf(stdout,nullptr,_IONBF,0);
- if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_GAMECONTROLLER)!=0){std::printf("SDL init error: %s\n",SDL_GetError());return 1;}
+ if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_GAMECONTROLLER)!=0){std::printf("SDL init error: %s\n",SDL_GetError());logDiagnostic("FATAL",std::string("SDL init failed: ")+SDL_GetError());return 1;}
  SDL_Window*w=SDL_CreateWindow("MESUT PS4 STORE",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,W,H,0);
- if(!w){SDL_Quit();return 2;}
+ if(!w){logDiagnostic("FATAL",std::string("window creation failed: ")+SDL_GetError());SDL_Quit();return 2;}
  SDL_Renderer*r=SDL_CreateRenderer(w,-1,SDL_RENDERER_SOFTWARE);
  if(!r){r=SDL_CreateSoftwareRenderer(SDL_GetWindowSurface(w));}
- if(!r){SDL_DestroyWindow(w);SDL_Quit();return 3;}
+ if(!r){logDiagnostic("FATAL",std::string("renderer creation failed: ")+SDL_GetError());SDL_DestroyWindow(w);SDL_Quit();return 3;}
  SDL_Joystick*joy=nullptr;
  if(SDL_NumJoysticks()>0)joy=SDL_JoystickOpen(0);
+ logDiagnostic("INFO","MESUT PS4 STORE 1.0.2 startup");
  loadCatalog();
  loadFavorites(); rebuildFavorites();
  bool running=true; Uint32 lastMove=0;
@@ -255,5 +274,6 @@ int main(int argc,char**argv){
   SDL_Delay(16);
  }
  if(joy)SDL_JoystickClose(joy);
+ logDiagnostic("INFO","application exited normally");
  SDL_DestroyRenderer(r);SDL_DestroyWindow(w);SDL_Quit();return 0;
 }
