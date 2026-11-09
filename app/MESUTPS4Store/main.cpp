@@ -32,7 +32,7 @@ static std::string jsonString(const std::string& obj,const char* key){
  return out;
 }
 static void loadCatalog(){
- std::ifstream file("/app0/data/catalog.json");
+ std::ifstream file("/app0/catalog.json");
  if(!file)return;
  std::string json((std::istreambuf_iterator<char>(file)),std::istreambuf_iterator<char>());
  std::string itemsKey(1,char(34)); itemsKey+="items"; itemsKey+=char(34);
