@@ -8,6 +8,8 @@ All notable changes to MESUT PS4 STORE are documented here.
 - Redesigned the README as a branded project landing page with a dedicated latest-release download area.
 - Added release, workflow, changelog, and issue navigation links.
 - Registered PSPKG as an external catalogue reference without enabling unauthorized direct downloads.
+- Added seven curated PS4 homebrew game records from Brewology, with versions, formats, requirements, and external listing links.
+- Recorded whether each title needs separately obtained game data; kept direct third-party package downloads disabled pending rights verification.
 - Added PSPKG integration notes and clarified third-party content authorization rules.
 - Corrected the OpenOrbis SDK extraction root and added package-tool setup to CI.
 - Professional project documentation.
