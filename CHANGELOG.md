@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2] - 2026-11-09
+
+### Added
+- Local diagnostic logging for startup, SDL failures, catalogue loading, favorites persistence, and clean shutdown.
+- Tools screen disclosure that diagnostic logs remain local and are not uploaded automatically.
+- AI self-repair architecture and security requirements documentation. Remote AI diagnosis and automatic updates are not active until a backend is deployed.
+
+
 All notable changes to MESUT PS4 STORE are documented here.
 
 ## [Unreleased]
