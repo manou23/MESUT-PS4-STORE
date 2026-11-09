@@ -50,6 +50,9 @@ jobs:
           # The upstream helper uses a Clang-internal flag unsupported by Ubuntu's Clang 14.
           # Keep the same unwind-table behavior with the portable driver flag.
           sed -i 's/-Xclang -munwind-tables/-funwind-tables/' SDL-PS4/cmake/oosdk.cmake
+          # SDL enables this warning as an error even though the project is compiled as C99.
+          # C99 permits mixed declarations and statements, so keep the diagnostic non-fatal.
+          grep -RIl -- '-Werror=declaration-after-statement' SDL-PS4 | xargs -r sed -i 's/-Werror=declaration-after-statement/-Wno-error=declaration-after-statement/g'
           cmake -S SDL-PS4 -B SDL-PS4/orbis -G Ninja \
             -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/SDL-PS4/cmake/oosdk.cmake" \
             -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_STANDARD=99 -DCMAKE_C_STANDARD_REQUIRED=ON -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TEST=OFF
