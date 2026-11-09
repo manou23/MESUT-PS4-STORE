@@ -21,7 +21,7 @@
 
 **MESUT PS4 STORE** is being developed as a dedicated PS4 homebrew library, designed around the comfort of the television screen and DualShock 4 controller. Its visual direction takes inspiration from the PlayStation Store: deep midnight surfaces, electric-blue highlights, featured content panels, and clean category shelves.
 
-The goal is to bring discovery, organization, and authorized package management together in one native console experience. The current native UI includes controller-browsable Retail Games and Homebrew Games shelves. The native app includes a runtime JSON catalogue reader for the bundled manifest at `/app0/catalog.json`. Persistent favorites have now been added in source; the latest native package build is being validated in GitHub Actions.
+The goal is to bring discovery, organization, and authorized package management together in one native console experience. The current native UI includes controller-browsable Retail Games and Homebrew Games shelves. The native app includes a runtime JSON catalogue reader for the bundled manifest at `/app0/catalog.json`. Persistent favorites have been added and the native package build passed in GitHub Actions. Real-console behavior still needs testing.
 
 ## ↓ Download MESUT PS4 STORE
 
@@ -51,7 +51,7 @@ The goal is to bring discovery, organization, and authorized package management 
 | Controller-browsable game lists and detail panels | Initial native screens added |
 | Runtime JSON catalogue reader and PKG manifest bundling | Implemented; CI build passed |
 | Runtime JSON catalogue browsing | Implemented; CI build passed |
-| Persistent favorites (save/remove and Favorites shelf) | Implemented in source; latest CI validation pending |
+| Persistent favorites (save/remove and Favorites shelf) | Implemented; CI build passed, console test pending |
 | Search and filters | Planned |
 | Favorites and authorized download queue | Planned |
 | Arabic RTL + English interface | Planned |
