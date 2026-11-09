@@ -1,0 +1,1 @@
+The OpenOrbis build creates `param.sfo`, GP4 metadata, and the PKG during the packaging stage. An application icon will be added before a public release candidate.
