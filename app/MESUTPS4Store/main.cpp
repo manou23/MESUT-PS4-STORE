@@ -8,13 +8,25 @@
 static const int W=1920, H=1080;
 struct Tile { const char* title; const char* category; SDL_Color color; };
 static Tile games[] = {
- {"HOME BREW","COMMUNITY",{20,94,170,255}},
- {"TOOLS","UTILITIES",{30,125,155,255}},
- {"THEMES","PERSONALIZE",{93,65,160,255}},
+ {"GAMES","PS4 RETAIL CATALOG",{20,94,170,255}},
+ {"HOMEBREW","FREE COMMUNITY",{30,125,155,255}},
+ {"TOOLS","UTILITIES",{93,65,160,255}},
  {"MY PACKAGES","LOCAL FILES",{45,105,85,255}},
  {"FAVORITES","SAVED ITEMS",{150,88,30,255}}
 };
-static int selected=0, section=0;
+static const char* retailGames[] = {
+ "EA SPORTS FC 27", "FC 27 LITE - FREE", "GRAND THEFT AUTO V",
+ "RED DEAD REDEMPTION 2", "GOD OF WAR RAGNAROK", "HORIZON FORBIDDEN WEST",
+ "SPIDER-MAN MILES MORALES", "ELDEN RING", "CYBERPUNK 2077",
+ "THE LAST OF US PART II", "GHOST OF TSUSHIMA", "UNCHARTED 4"
+};
+static const char* homebrewGames[] = {
+ "MUNDOCRAFT", "DESCENT I + II", "ALIENS VS PREDATOR",
+ "FALLOUT 2 COMMUNITY EDITION", "IOQUAKE3", "DEVILUTIONX",
+ "RELIC HUNTERS ZERO"
+};
+static int selected=0, section=0, item=0;
+static bool detail=false;
 
 static SDL_Color white={245,248,255,255}, muted={160,176,198,255}, blue={0,112,209,255};
 static void rect(SDL_Renderer*r,int x,int y,int w,int h,SDL_Color c){
@@ -39,15 +51,49 @@ static void render(SDL_Renderer*r){
  rect(r,0,0,W,H,{9,15,28,255});
  rect(r,0,0,W,7,blue);
  text(r,82,52,"MESUT PS4 STORE",5,white);
- text(r,84,105,"HOME BREW AND COMMUNITY LIBRARY",2,muted);
- rect(r,1500,58,330,58,{22,35,54,255}); text(r,1530,78,"ENGLISH PREVIEW",2,white);
+ text(r,84,105,"PS4 GAME DISCOVERY AND HOME LIBRARY",2,muted);
+ rect(r,1500,58,330,58,{22,35,54,255}); text(r,1530,78,"DUALSHOCK READY",2,white);
+ if(section>0){
+  const bool retail=(section==1);
+  const int count=retail?(int)(sizeof(retailGames)/sizeof(retailGames[0])):(int)(sizeof(homebrewGames)/sizeof(homebrewGames[0]));
+  const char** list=retail?retailGames:homebrewGames;
+  text(r,84,185,retail?"POPULAR PS4 GAMES":"PS4 HOMEBREW GAMES",3,white);
+  text(r,86,232,retail?"COMMERCIAL TITLES - OFFICIAL STORE REFERENCES":"COMMUNITY PORTS - CHECK GAME DATA REQUIREMENTS",2,muted);
+  if(detail){
+   rect(r,80,300,1760,560,{17,39,67,255}); rect(r,80,300,10,560,blue);
+   text(r,135,365,list[item],4,white);
+   if(retail){
+    text(r,138,455,"COMMERCIAL PS4 TITLE",2,{167,205,240,255});
+    text(r,138,510,item==1?"FREE LIMITED PREVIEW - OFFICIAL STORE":"OFFICIAL STORE REFERENCE ONLY",2,white);
+    text(r,138,585,"NO UNAUTHORIZED PKG MIRRORS ARE INCLUDED",2,muted);
+    text(r,138,635,"USE YOUR OWN LEGITIMATE COPY OR OFFICIAL STORE",2,muted);
+   }else{
+    text(r,138,455,"COMMUNITY-MADE PS4 PORT",2,{167,205,240,255});
+    text(r,138,510,"OPEN THE SOURCE LISTING FOR PACKAGE DETAILS",2,white);
+    text(r,138,585,"SOME TITLES REQUIRE ORIGINAL GAME DATA",2,muted);
+    text(r,138,635,"CHECK LICENSE AND RELEASE STATUS BEFORE INSTALL",2,muted);
+   }
+   text(r,138,790,"PRESS O / BACK TO RETURN TO THE LIST",2,muted);
+  }else{
+   for(int i=0;i<count&&i<10;i++){
+    int y=292+i*62;
+    SDL_Color c=(i==item)?SDL_Color{18,75,130,255}:SDL_Color{17,27,43,255};
+    rect(r,90,y,1740,52,c);
+    text(r,122,y+17,list[i],2,white);
+    if(retail) text(r,1470,y+18,i==1?"FREE PREVIEW":"RETAIL TITLE",1,{167,205,240,255});
+    else text(r,1470,y+18,"HOMEBREW",1,{167,205,240,255});
+   }
+  }
+  text(r,85,990,"UP DOWN SELECT     X DETAILS     O BACK",2,muted);
+  text(r,1580,990,"MESUT STORE 1.0.0",2,{90,145,205,255});
+  return;
+ }
  text(r,84,190,"DISCOVER",3,white);
- text(r,84,245,"A STORE EXPERIENCE BUILT FOR YOUR CONSOLE",2,muted);
- // Featured banner
+ text(r,84,245,"BROWSE RETAIL GAMES, HOMEBREW AND YOUR OWN PACKAGES",2,muted);
  rect(r,80,310,1760,285,{17,39,67,255}); rect(r,80,310,12,285,blue);
- text(r,135,365,"WELCOME TO MESUT",4,white);
- text(r,138,430,"HOME BREW  /  TOOLS  /  THEMES",2,{167,205,240,255});
- text(r,138,490,"YOUR LIBRARY. YOUR CONSOLE.",2,muted);
+ text(r,135,365,"YOUR PS4 GAME LIBRARY",4,white);
+ text(r,138,430,"RETAIL CATALOG  /  HOMEBREW  /  LOCAL PKG",2,{167,205,240,255});
+ text(r,138,490,"DISCOVER GAMES AND ORGANIZE YOUR COLLECTION",2,muted);
  rect(r,1460,360,280,180,{0,91,174,255});
  text(r,1515,425,"PS4",6,white); text(r,1510,510,"STORE",2,white);
  text(r,85,655,"BROWSE CATEGORIES",3,white);
@@ -61,7 +107,7 @@ static void render(SDL_Renderer*r){
   text(r,x+22,895,games[i].category,1,muted);
   if(i==selected){rect(r,x-4,716,330,4,blue);rect(r,x-4,925,330,4,blue);rect(r,x-4,716,4,213,blue);rect(r,x+322,716,4,213,blue);}
  }
- text(r,85,990,"D-PAD SELECT     X OPEN     O BACK     OPTIONS SETTINGS",2,muted);
+ text(r,85,990,"D-PAD SELECT     X OPEN     O BACK",2,muted);
  text(r,1580,990,"VERSION 1.0.0",2,{90,145,205,255});
 }
 int main(int argc,char**argv){
@@ -81,18 +127,20 @@ int main(int argc,char**argv){
    if(e.type==SDL_QUIT)running=false;
    if(e.type==SDL_KEYDOWN){
     switch(e.key.keysym.sym){
-     case SDLK_ESCAPE:case SDLK_BACKSPACE:running=false;break;
-     case SDLK_LEFT:case SDLK_a:selected=(selected+4)%5;break;
-     case SDLK_RIGHT:case SDLK_d:selected=(selected+1)%5;break;
-     case SDLK_RETURN:case SDLK_x:section=selected+1;break;
+     case SDLK_ESCAPE:if(section>0){section=0;detail=false;item=0;}else running=false;break; case SDLK_BACKSPACE:if(section>0){if(detail)detail=false;else{section=0;item=0;}}else running=false;break;
+     case SDLK_LEFT:case SDLK_a:if(section>0&&!detail){int n=section==1?12:7;item=(item+n-1)%n;}else if(section==0)selected=(selected+4)%5;break;
+     case SDLK_RIGHT:case SDLK_d:if(section>0&&!detail){int n=section==1?12:7;item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;break;
+     case SDLK_UP:if(section>0&&!detail){int n=section==1?12:7;item=(item+n-1)%n;}break;
+     case SDLK_DOWN:if(section>0&&!detail){int n=section==1?12:7;item=(item+1)%n;}break;
+     case SDLK_RETURN:case SDLK_x:if(section==0){section=selected==0?1:(selected==1?2:0);item=0;detail=false;}else detail=!detail;break;
 
     }
    }
    if(e.type==SDL_JOYBUTTONDOWN){
-    if(e.jbutton.button==0)section=selected+1;
-    if(e.jbutton.button==1)section=0;
-    if(e.jbutton.button==4)selected=(selected+4)%5;
-    if(e.jbutton.button==5)selected=(selected+1)%5;
+    if(e.jbutton.button==0){if(section==0){section=selected==0?1:(selected==1?2:0);item=0;detail=false;}else detail=!detail;}
+    if(e.jbutton.button==1){if(section>0){if(detail)detail=false;else{section=0;item=0;}}}
+    if(e.jbutton.button==4){if(section>0&&!detail){int n=section==1?12:7;item=(item+n-1)%n;}else if(section==0)selected=(selected+4)%5;}
+    if(e.jbutton.button==5){if(section>0&&!detail){int n=section==1?12:7;item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;}
 
    }
    if(e.type==SDL_JOYAXISMOTION&&SDL_GetTicks()-lastMove>180){
