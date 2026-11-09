@@ -21,25 +21,39 @@ jobs:
       - name: Install host dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake ninja-build curl tar clang lld
+          sudo apt-get install -y build-essential cmake ninja-build curl tar clang lld unzip
 
-      - name: Download OpenOrbis Toolchain v0.5.4
+      - name: Download and configure OpenOrbis Toolchain v0.5.4
         run: |
           mkdir -p "$HOME/OpenOrbisSDK"
           curl -fL --retry 3 "https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.4/toolchain-llvm-18.tar.gz" -o /tmp/openorbis.tar.gz
           echo "3c7cd5bb593ca74fa1c13fd59f3938dc0fc07985167f7275063019e63abe4526  /tmp/openorbis.tar.gz" | sha256sum -c -
           tar -xzf /tmp/openorbis.tar.gz -C "$HOME/OpenOrbisSDK"
-          echo "OO_PS4_TOOLCHAIN=$HOME/OpenOrbisSDK" >> "$GITHUB_ENV"
-          echo "$HOME/OpenOrbisSDK/bin/linux" >> "$GITHUB_PATH"
-          chmod +x "$HOME"/OpenOrbisSDK/bin/linux/*
+          export OO_PS4_TOOLCHAIN="$HOME/OpenOrbisSDK/OpenOrbis/PS4Toolchain"
+          test -f "$OO_PS4_TOOLCHAIN/link.x"
+          test -x "$OO_PS4_TOOLCHAIN/bin/linux/create-fself"
+          chmod +x -R "$OO_PS4_TOOLCHAIN/bin"
+          echo "OO_PS4_TOOLCHAIN=$OO_PS4_TOOLCHAIN" >> "$GITHUB_ENV"
+          echo "$OO_PS4_TOOLCHAIN/bin/linux" >> "$GITHUB_PATH"
+
+      - name: Download package creation tools
+        run: |
+          curl -fL --retry 3 "https://github.com/OpenOrbis/create-gp4/releases/latest/download/binaries.tar.gz" -o /tmp/create-gp4.tar.gz
+          tar -xzf /tmp/create-gp4.tar.gz -C "$OO_PS4_TOOLCHAIN"
+          curl -fL --retry 3 "https://github.com/maxton/LibOrbisPkg/releases/download/0.2.231/PkgTool.Core-linux-x64-0.2.231.zip" -o /tmp/pkgtool.zip
+          unzip -o /tmp/pkgtool.zip -d "$OO_PS4_TOOLCHAIN/bin/linux"
+          chmod +x "$OO_PS4_TOOLCHAIN/bin/linux/"*
 
       - name: Build SDL2 for OpenOrbis
         run: |
           git clone --depth 1 https://github.com/OpenOrbis/SDL-PS4.git SDL-PS4
-          cmake -S SDL-PS4 -B SDL-PS4/orbis -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/SDL-PS4/cmake/openorbis.cmake" -DCMAKE_BUILD_TYPE=Release -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TEST=OFF
+          cmake -S SDL-PS4 -B SDL-PS4/orbis \
+            -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/SDL-PS4/cmake/openorbis.cmake" \
+            -DCMAKE_BUILD_TYPE=Release -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TEST=OFF
           cmake --build SDL-PS4/orbis --parallel 2
-          find SDL-PS4/orbis -name 'libSDL2.a' -print -quit | grep -q .
-          cp "$(find SDL-PS4/orbis -name 'libSDL2.a' -print -quit)" "$OO_PS4_TOOLCHAIN/lib/libSDL2.a"
+          SDL_LIB="$(find SDL-PS4/orbis -name 'libSDL2.a' -print -quit)"
+          test -n "$SDL_LIB"
+          cp "$SDL_LIB" "$OO_PS4_TOOLCHAIN/lib/libSDL2.a"
 
       - name: Build native application and package
         working-directory: app
