@@ -2,6 +2,22 @@
 
 All notable changes to MESUT PS4 STORE are documented here.
 
+## [1.0.1] - 2026-11-09
+
+### Added
+- Runtime JSON catalogue reader for the bundled PS4 manifest.
+- Package-root catalogue file included in the GP4 file list.
+- Dedicated screens for all five home categories, with clear status text for features not yet active.
+- Manifest validation and generated C++ fallback title arrays.
+
+### Fixed
+- Corrected the runtime manifest path to match the package-root layout.
+- Avoided GP4 nested-directory generation that caused the package builder to fail.
+
+### Validation
+- The 1.0.0 package-root build passed PKG validation and uploaded successfully.
+- The 1.0.1 build is in progress; console installation and runtime behavior remain unverified.
+
 ## [1.0.0] - 2026-11-09
 
 ### Added
