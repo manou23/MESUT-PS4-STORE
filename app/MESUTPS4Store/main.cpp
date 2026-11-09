@@ -75,12 +75,14 @@ static void render(SDL_Renderer*r){
    }
    text(r,138,790,"PRESS O / BACK TO RETURN TO THE LIST",2,muted);
   }else{
-   for(int i=0;i<count&&i<10;i++){
+   int first=item>=10?item-9:0;
+   for(int i=0;i<10&&first+i<count;i++){
+    int idx=first+i;
     int y=292+i*62;
-    SDL_Color c=(i==item)?SDL_Color{18,75,130,255}:SDL_Color{17,27,43,255};
+    SDL_Color c=(idx==item)?SDL_Color{18,75,130,255}:SDL_Color{17,27,43,255};
     rect(r,90,y,1740,52,c);
-    text(r,122,y+17,list[i],2,white);
-    if(retail) text(r,1470,y+18,i==1?"FREE PREVIEW":"RETAIL TITLE",1,{167,205,240,255});
+    text(r,122,y+17,list[idx],2,white);
+    if(retail) text(r,1470,y+18,idx==1?"FREE PREVIEW":"RETAIL TITLE",1,{167,205,240,255});
     else text(r,1470,y+18,"HOMEBREW",1,{167,205,240,255});
    }
   }
