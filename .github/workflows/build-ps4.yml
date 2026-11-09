@@ -50,6 +50,8 @@ jobs:
           # The upstream helper uses a Clang-internal flag unsupported by Ubuntu's Clang 14.
           # Keep the same unwind-table behavior with the portable driver flag.
           sed -i 's/-Xclang -munwind-tables/-funwind-tables/' SDL-PS4/cmake/oosdk.cmake
+          # The app is intentionally built without SDL audio; drop the stale PS4 audio bootstrap declaration.
+          sed -i '/#define SDL_AUDIO_DRIVER_PS4[[:space:]]*1/d' SDL-PS4/include/SDL_config_ps4.h
           # OpenOrbis ships the controller header with an uppercase P; SDL's PS4 backend uses lowercase.
           # SDL's PS4 backend was written against Sony SDK names; map it to OpenOrbis headers and ABI names.
           sed -i 's|#include <pad.h>|#include <orbis/Pad.h>\n#include <orbis/UserService.h>|' SDL-PS4/src/joystick/ps4/SDL_sysjoystick.c
