@@ -21,7 +21,7 @@
 
 **MESUT PS4 STORE** is being developed as a dedicated PS4 homebrew library, designed around the comfort of the television screen and DualShock 4 controller. Its visual direction takes inspiration from the PlayStation Store: deep midnight surfaces, electric-blue highlights, featured content panels, and clean category shelves.
 
-The goal is to bring discovery, organization, and authorized package management together in one native console experience. The current native UI includes controller-browsable Retail Games and Homebrew Games shelves. The native app now includes a runtime JSON catalogue reader for the bundled manifest. The manifest is packaged at `app0:/data/catalog.json`; the updated build is being checked before this runtime path is marked verified.
+The goal is to bring discovery, organization, and authorized package management together in one native console experience. The current native UI includes controller-browsable Retail Games and Homebrew Games shelves. The native app includes a runtime JSON catalogue reader for the bundled manifest at `/app0/catalog.json`. Persistent favorites have now been added in source; the latest native package build is being validated in GitHub Actions.
 
 ## ↓ Download MESUT PS4 STORE
 
@@ -49,8 +49,9 @@ The goal is to bring discovery, organization, and authorized package management 
 | Retail PS4 game discovery shelf | 12 curated titles generated from catalogue manifest |
 | Homebrew games shelf | 7 curated titles generated from catalogue manifest |
 | Controller-browsable game lists and detail panels | Initial native screens added |
-| Runtime JSON catalogue reader and PKG manifest bundling | Implemented in source; CI verification pending |
-| Runtime JSON catalogue browsing | Implemented in source; CI verification pending |
+| Runtime JSON catalogue reader and PKG manifest bundling | Implemented; CI build passed |
+| Runtime JSON catalogue browsing | Implemented; CI build passed |
+| Persistent favorites (save/remove and Favorites shelf) | Implemented in source; latest CI validation pending |
 | Search and filters | Planned |
 | Favorites and authorized download queue | Planned |
 | Arabic RTL + English interface | Planned |
@@ -112,7 +113,7 @@ Read the [content and source policy](docs/CONTENT_POLICY.md) and [Brewology inte
 
 Every code change can be built through [GitHub Actions](https://github.com/manou23/MESUT-PS4-STORE/actions/workflows/build-ps4.yml). Successful workflow artifacts are temporary CI outputs; stable user downloads will be published through GitHub Releases after validation.
 
-**Current release line:** 1.0.0 — development foundation.
+**Current package version:** 1.0.1 — development build. Persistent favorites are the next in-progress source update.
 
 - [View latest workflow run](https://github.com/manou23/MESUT-PS4-STORE/actions)
 - [Download published releases](https://github.com/manou23/MESUT-PS4-STORE/releases)
