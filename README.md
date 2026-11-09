@@ -6,7 +6,7 @@
 
 **A native, controller-first homebrew library for PlayStation 4**
 
-[![Version](https://img.shields.io/badge/version-1.0.1-0878D1?style=for-the-badge)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.0.2-0878D1?style=for-the-badge)](CHANGELOG.md)
 [![Platform](https://img.shields.io/badge/platform-PLAYSTATION%204-151B2B?style=for-the-badge)](#)
 [![Build](https://img.shields.io/github/actions/workflow/status/manou23/MESUT-PS4-STORE/build-ps4.yml?branch=main&style=for-the-badge&label=BUILD)](https://github.com/manou23/MESUT-PS4-STORE/actions/workflows/build-ps4.yml)
 [![License](https://img.shields.io/badge/license-MIT-2E9D69?style=for-the-badge)](LICENSE)
