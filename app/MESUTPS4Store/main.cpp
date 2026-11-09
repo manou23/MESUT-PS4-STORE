@@ -32,7 +32,7 @@ static bool detail=false;
 struct CatalogEntry { std::string title, type, description, url; };
 static std::vector<CatalogEntry> retailCatalog, homebrewCatalog;
 static std::string jsonString(const std::string& obj,const char* key){
- std::string needle=std::string("\\"")+key+"\\"";
+ std::string needle(1,char(34)); needle+=key; needle+=char(34);
  size_t p=obj.find(needle); if(p==std::string::npos)return "";
  p=obj.find(':',p+needle.size()); if(p==std::string::npos)return "";
  p=obj.find('"',p+1); if(p==std::string::npos)return "";
@@ -44,7 +44,8 @@ static void loadCatalog(){
  std::ifstream file("/app0/data/catalog.json");
  if(!file)return;
  std::string json((std::istreambuf_iterator<char>(file)),std::istreambuf_iterator<char>());
- size_t p=json.find("\\"items\\""); if(p==std::string::npos)return;
+ std::string itemsKey(1,char(34)); itemsKey+="items"; itemsKey+=char(34);
+ size_t p=json.find(itemsKey); if(p==std::string::npos)return;
  p=json.find('[',p); if(p==std::string::npos)return;
  bool quoted=false,escaped=false; int depth=0; size_t start=0;
  for(size_t i=p+1;i<json.size();++i){char ch=json[i];
