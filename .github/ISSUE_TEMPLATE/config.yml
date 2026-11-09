@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Tester guide and current test status
+    url: https://github.com/manou23/MESUT-PS4-STORE/blob/main/docs/BETA_TESTING.md
+    about: Check whether a real-console test build has been announced before testing.
+  - name: Content and package rights policy
+    url: https://github.com/manou23/MESUT-PS4-STORE/blob/main/docs/CONTENT_POLICY.md
+    about: Understand which catalogue links and packages may be included.
+  - name: Security and responsible disclosure
+    url: https://github.com/manou23/MESUT-PS4-STORE/blob/main/SECURITY.md
+    about: Report security-sensitive issues privately and safely.
