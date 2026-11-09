@@ -129,6 +129,18 @@ This project is intended for compatible PS4 homebrew environments. Firmware comp
 5. Add Arabic shaping/RTL support and English localization.
 6. Test installation and runtime behavior on supported PS4 hardware.
 
+## 🧪 Join the tester community
+
+Help us validate MESUT PS4 STORE with clear, reproducible feedback. **Real-console testing is not open until a verified test PKG is announced in Releases or in the testing guide.** A green CI check alone does not mean the app has been tested on a PS4.
+
+<div align="center">
+
+[**🧪 TESTER GUIDE**](docs/BETA_TESTING.md)　|　[**🐞 REPORT A BUG**](https://github.com/manou23/MESUT-PS4-STORE/issues/new?template=bug_report.yml)　|　[**💡 SUGGEST A FEATURE**](https://github.com/manou23/MESUT-PS4-STORE/issues/new?template=feature_request.yml)　|　[**🎮 SEND TEST RESULTS**](https://github.com/manou23/MESUT-PS4-STORE/issues/new?template=field_test_report.yml)
+
+</div>
+
+We welcome feedback about installation, startup, controller navigation, TV readability, performance, catalogue accuracy, and accessibility. Please include the exact build, firmware, environment, and reproduction steps. Never post account credentials, console identifiers, private tokens, or copyrighted game packages.
+
 ## 🤝 Contributing
 
 Bug reports, tested fixes, and improvements are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting changes.
