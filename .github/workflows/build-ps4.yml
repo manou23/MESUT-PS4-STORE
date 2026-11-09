@@ -55,7 +55,7 @@ jobs:
           grep -RIl -- '-Werror=declaration-after-statement' SDL-PS4 | xargs -r sed -i 's/-Werror=declaration-after-statement/-Wno-error=declaration-after-statement/g'
           cmake -S SDL-PS4 -B SDL-PS4/orbis -G Ninja \
             -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/SDL-PS4/cmake/oosdk.cmake" \
-            -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_STANDARD=99 -DCMAKE_C_STANDARD_REQUIRED=ON -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TEST=OFF
+            -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_STANDARD=99 -DCMAKE_C_STANDARD_REQUIRED=ON -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TEST=OFF -DSDL_AUDIO=OFF
           cmake --build SDL-PS4/orbis --parallel 2
           SDL_LIB="$(find SDL-PS4/orbis -name 'libSDL2.a' -print -quit)"
           test -n "$SDL_LIB"
