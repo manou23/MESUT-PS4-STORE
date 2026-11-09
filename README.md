@@ -50,7 +50,8 @@ The goal is to bring discovery, organization, and authorized package management 
 | Homebrew games shelf | 7 curated titles generated from catalogue manifest |
 | Controller-browsable game lists and detail panels | Initial native screens added |
 | Runtime JSON catalogue reader and PKG manifest bundling | Implemented in source; CI verification pending |
-| Runtime JSON browsing | Implemented in source; CI verification pending |\n| Search and filters | Planned |
+| Runtime JSON catalogue browsing | Implemented in source; CI verification pending |
+| Search and filters | Planned |
 | Favorites and authorized download queue | Planned |
 | Arabic RTL + English interface | Planned |
 | Authorized PKG download manager | Planned |
