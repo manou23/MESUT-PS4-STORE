@@ -1,7 +1,19 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "app_version": "1.0.0",
   "updated_at": "2026-11-09",
   "language_default": "en",
+  "sources": [
+    {
+      "id": "pspkg",
+      "name": "PSPKG",
+      "kind": "external_catalog_reference",
+      "homepage": "https://pspkg.com/",
+      "integration_mode": "external_link_only",
+      "direct_download_enabled": false,
+      "metadata_import": "disabled_until_authorized_api_or_permission_is_verified",
+      "notes": "Open the source website for its own listings. Do not scrape protected pages, bypass access controls, or expose third-party commercial package links."
+    }
+  ],
   "items": []
 }
