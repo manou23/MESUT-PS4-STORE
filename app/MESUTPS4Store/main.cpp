@@ -128,7 +128,7 @@ static void render(SDL_Renderer*r){
    }
   }
   text(r,85,990,"UP DOWN SELECT     X DETAILS     O BACK",2,muted);
-  text(r,1580,990,"MESUT STORE 1.0.0",2,{90,145,205,255});
+  text(r,1580,990,"MESUT STORE 1.0.1",2,{90,145,205,255});
   return;
  }
  text(r,84,190,"DISCOVER",3,white);
@@ -151,7 +151,7 @@ static void render(SDL_Renderer*r){
   if(i==selected){rect(r,x-4,716,330,4,blue);rect(r,x-4,925,330,4,blue);rect(r,x-4,716,4,213,blue);rect(r,x+322,716,4,213,blue);}
  }
  text(r,85,990,"D-PAD SELECT     X OPEN     O BACK",2,muted);
- text(r,1580,990,"VERSION 1.0.0",2,{90,145,205,255});
+ text(r,1580,990,"VERSION 1.0.1",2,{90,145,205,255});
 }
 int main(int argc,char**argv){
  setvbuf(stdout,nullptr,_IONBF,0);
