@@ -4,16 +4,16 @@
 - [x] Repository structure and product definition
 - [x] Catalogue schema baseline
 - [x] Content provenance policy
-- [ ] Native PS4 app shell
-- [ ] OpenOrbis build pipeline
-- [ ] First verified PKG artifact
+- [x] Native PS4 app shell (initial SDL2 interface)
+- [x] OpenOrbis build pipeline
+- [x] First CI-generated and validated PKG artifact (hardware install still unverified)
 
 ## 1.0.1 — First functional preview
-- [ ] Native home screen and category shelves
-- [ ] DualShock 4 navigation and focus states
+- [x] Native home screen and category shelves (initial screens)
+- [ ] DualShock 4 navigation and focus states (basic input added; real-console mapping pending)
 - [ ] Arabic / English language switch
-- [ ] Local catalogue loading and search
-- [ ] Favorites and item details
+- [ ] Runtime local catalogue loading (implemented in source; latest CI verification pending)\n- [ ] Search and filters
+- [ ] Favorites persistence\n- [x] Initial item detail panels
 
 ## 1.1.x — Catalogue and package workflow
 - [ ] Approved source adapter interface
