@@ -1,5 +1,5 @@
 TITLE       := MESUT PS4 STORE
-VERSION     := 1.00
+VERSION     := 1.01
 TITLE_ID    := MSTP00001
 CONTENT_ID  := IV0000-MSTP00001_00-MESUTPS4STORE001
 LIBS        := -lc -lkernel -lc++ -lSceUserService -lSceVideoOut -lScePad -lSceSysmodule -lSDL2
