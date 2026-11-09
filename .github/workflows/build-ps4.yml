@@ -82,7 +82,7 @@ jobs:
       - name: Upload PKG artifact
         uses: actions/upload-artifact@v4
         with:
-          name: MESUT-PS4-STORE-1.0.0
+          name: MESUT-PS4-STORE-1.0.2
           path: app/IV0000-MSTP00001_00-MESUTPS4STORE001.pkg
           if-no-files-found: error
           retention-days: 14
