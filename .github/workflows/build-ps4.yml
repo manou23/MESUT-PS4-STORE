@@ -52,6 +52,8 @@ jobs:
           sed -i 's/-Xclang -munwind-tables/-funwind-tables/' SDL-PS4/cmake/oosdk.cmake
           # OpenOrbis ships the controller header with an uppercase P; SDL's PS4 backend uses lowercase.
           sed -i 's/#include <pad.h>/#include <Pad.h>/' SDL-PS4/src/joystick/ps4/SDL_sysjoystick.c
+          # OpenOrbis exposes kernel APIs through libkernel.h (there is no top-level kernel.h).
+          sed -i 's/#include <kernel.h>/#include <libkernel.h>/' SDL-PS4/src/joystick/ps4/SDL_sysjoystick.c
           # SDL enables this warning as an error even though the project is compiled as C99.
           # C99 permits mixed declarations and statements, so keep the diagnostic non-fatal.
           grep -RIl -- '-Werror=declaration-after-statement' SDL-PS4 | xargs -r sed -i 's/-Werror=declaration-after-statement/-Wno-error=declaration-after-statement/g'
