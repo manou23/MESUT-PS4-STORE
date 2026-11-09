@@ -62,7 +62,7 @@ static void loadFavorites(){
 static void saveFavorites(){
  std::ofstream out(FAVORITES_FILE,std::ios::trunc);
  if(!out)return;
- for(const auto& id:favoriteIds) out<<id<<"\\n";
+ for(const auto& id:favoriteIds) out<<id<<"\n";
 }
 static bool isFavorite(const std::string& id){return std::find(favoriteIds.begin(),favoriteIds.end(),id)!=favoriteIds.end();}
 static void rebuildFavorites(){
@@ -228,7 +228,7 @@ int main(int argc,char**argv){
    if(e.type==SDL_KEYDOWN){
     switch(e.key.keysym.sym){
      case SDLK_ESCAPE:if(section>0){section=0;detail=false;item=0;}else running=false;break; case SDLK_BACKSPACE:if(section>0){if(detail)detail=false;else{section=0;item=0;}}else running=false;break;
-     case SDLK_LEFT:case SDLK_a:if(section>0&&!detail){int n=countForSection(section);item=(item+n-1)%n;}else if(section==0)selected=(selected+4)%5;break;
+     case SDLK_LEFT:case SDLK_a:if(section>0&&!detail){int n=countForSection(section);if(n>0)item=(item+n-1)%n;}else if(section==0)selected=(selected+4)%5;break;
      case SDLK_RIGHT:case SDLK_d:if(section>0&&!detail){int n=countForSection(section);if(n>0)item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;break;
      case SDLK_UP:if(section>0&&!detail){int n=countForSection(section);if(n>0)item=(item+n-1)%n;}break;
      case SDLK_DOWN:if(section>0&&!detail){int n=countForSection(section);if(n>0)item=(item+1)%n;}break;
@@ -242,7 +242,7 @@ int main(int argc,char**argv){
     if(e.jbutton.button==3){if(section==1||section==2){const auto& list=catalogFor(section);if(item<(int)list.size())toggleFavorite(list[item]);}else if(section==5&&item<(int)favoriteCatalog.size()){toggleFavorite(favoriteCatalog[item]);if(item>=(int)favoriteCatalog.size())item=(int)favoriteCatalog.size()-1;if(item<0)item=0;}}
     if(e.jbutton.button==1){if(section>0){if(detail)detail=false;else{section=0;item=0;}}}
     if(e.jbutton.button==4){if(section>0&&!detail){int n=countForSection(section);if(n>0)item=(item+n-1)%n;}else if(section==0)selected=(selected+4)%5;}
-    if(e.jbutton.button==5){if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;}
+    if(e.jbutton.button==5){if(section>0&&!detail){int n=countForSection(section);if(n>0)item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;}
 
    }
    if(e.type==SDL_JOYAXISMOTION&&SDL_GetTicks()-lastMove>180){
