@@ -2,6 +2,17 @@
 
 All notable changes to MESUT PS4 STORE are documented here.
 
+## [Unreleased]
+
+### Added
+- Persistent favorites saved to the console data directory.
+- A dedicated Favorites shelf with saved-item details and removal controls.
+- Triangle / F shortcut to add or remove the selected catalogue item.
+
+### Validation
+- The source update is committed; final CI validation is running. Real-console persistence and controller mapping still require device testing.
+
+
 ## [1.0.1] - 2026-11-09
 
 ### Added
