@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 
 static const int W=1920, H=1080;
 struct Tile { const char* title; const char* category; SDL_Color color; };
@@ -27,6 +28,40 @@ static const char* homebrewGames[] = {
 };
 static int selected=0, section=0, item=0;
 static bool detail=false;
+
+struct CatalogEntry { std::string title, type, description, url; };
+static std::vector<CatalogEntry> retailCatalog, homebrewCatalog;
+static std::string jsonString(const std::string& obj,const char* key){
+ std::string needle=std::string("\\"")+key+"\\"";
+ size_t p=obj.find(needle); if(p==std::string::npos)return "";
+ p=obj.find(':',p+needle.size()); if(p==std::string::npos)return "";
+ p=obj.find('"',p+1); if(p==std::string::npos)return "";
+ std::string out;
+ for(++p;p<obj.size();++p){char ch=obj[p];if(ch=='"')break;if(ch=='\\\\'&&p+1<obj.size()){char e=obj[++p];if(e=='n')out+=' ';else out+=e;}else out+=ch;}
+ return out;
+}
+static void loadCatalog(){
+ std::ifstream file("/app0/data/catalog.json");
+ if(!file)return;
+ std::string json((std::istreambuf_iterator<char>(file)),std::istreambuf_iterator<char>());
+ size_t p=json.find("\\"items\\""); if(p==std::string::npos)return;
+ p=json.find('[',p); if(p==std::string::npos)return;
+ bool quoted=false,escaped=false; int depth=0; size_t start=0;
+ for(size_t i=p+1;i<json.size();++i){char ch=json[i];
+  if(quoted){if(escaped)escaped=false;else if(ch=='\\\\')escaped=true;else if(ch=='"')quoted=false;continue;}
+  if(ch=='"'){quoted=true;continue;}
+  if(ch=='{'){if(depth++==0)start=i;}
+  else if(ch=='}'&&depth>0&&--depth==0){
+   std::string obj=json.substr(start,i-start+1);
+   CatalogEntry e; e.title=jsonString(obj,"title");e.type=jsonString(obj,"type");
+   e.description=jsonString(obj,"description");e.url=jsonString(obj,"listing_url");
+   if(!e.title.empty()&&e.type=="commercial_game")retailCatalog.push_back(e);
+   else if(!e.title.empty()&&e.type=="game")homebrewCatalog.push_back(e);
+  }
+  else if(ch==']'&&depth==0)break;
+ }
+}
+static const std::vector<CatalogEntry>& catalogFor(int sec){return sec==1?retailCatalog:homebrewCatalog;}
 
 static SDL_Color white={245,248,255,255}, muted={160,176,198,255}, blue={0,112,209,255};
 static void rect(SDL_Renderer*r,int x,int y,int w,int h,SDL_Color c){
