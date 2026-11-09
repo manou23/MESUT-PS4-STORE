@@ -47,8 +47,8 @@ jobs:
       - name: Build SDL2 for OpenOrbis
         run: |
           git clone --depth 1 https://github.com/OpenOrbis/SDL-PS4.git SDL-PS4
-          cmake -S SDL-PS4 -B SDL-PS4/orbis \
-            -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/SDL-PS4/cmake/openorbis.cmake" \
+          cmake -S SDL-PS4 -B SDL-PS4/orbis -G Ninja \
+            -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/SDL-PS4/cmake/oosdk.cmake" \
             -DCMAKE_BUILD_TYPE=Release -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TEST=OFF
           cmake --build SDL-PS4/orbis --parallel 2
           SDL_LIB="$(find SDL-PS4/orbis -name 'libSDL2.a' -print -quit)"
