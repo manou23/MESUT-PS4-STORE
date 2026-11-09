@@ -12,8 +12,10 @@
 - [x] Native home screen and category shelves (initial screens)
 - [ ] DualShock 4 navigation and focus states (basic input added; real-console mapping pending)
 - [ ] Arabic / English language switch
-- [ ] Runtime local catalogue loading (implemented in source; latest CI verification pending)\n- [ ] Search and filters
-- [ ] Favorites persistence\n- [x] Initial item detail panels
+- [ ] Runtime local catalogue loading (implemented in source; latest CI verification pending)
+- [ ] Search and filters
+- [ ] Favorites persistence
+- [x] Initial item detail panels
 
 ## 1.1.x — Catalogue and package workflow
 - [ ] Approved source adapter interface
