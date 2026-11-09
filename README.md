@@ -21,7 +21,7 @@
 
 **MESUT PS4 STORE** is being developed as a dedicated PS4 homebrew library, designed around the comfort of the television screen and DualShock 4 controller. Its visual direction takes inspiration from the PlayStation Store: deep midnight surfaces, electric-blue highlights, featured content panels, and clean category shelves.
 
-The goal is to bring discovery, organization, and authorized package management together in one native console experience.
+The goal is to bring discovery, organization, and authorized package management together in one native console experience. The current native UI includes controller-browsable Retail Games and Homebrew Games shelves; the catalogue manifest contains the curated game metadata.
 
 ## ↓ Download MESUT PS4 STORE
 
@@ -46,8 +46,10 @@ The goal is to bring discovery, organization, and authorized package management 
 | Native PS4 application foundation | In development |
 | TV-first 1920 × 1080 interface | Initial UI added |
 | DualShock 4 navigation | Basic input foundation added |
-| Homebrew, tools and themes categories | UI foundation added |
-| Game catalogue, search and details | Planned |
+| Retail PS4 game discovery shelf | 12 curated titles added to catalogue |
+| Homebrew games shelf | 7 curated titles added to catalogue |
+| Controller-browsable game lists and detail panels | Initial native screens added |
+| Dynamic JSON catalogue loading and live search | Planned |
 | Favorites and download queue | Planned |
 | Arabic RTL + English interface | Planned |
 | Authorized PKG download manager | Planned |
@@ -59,7 +61,7 @@ The goal is to bring discovery, organization, and authorized package management 
 
 [![Visit PSPKG](https://img.shields.io/badge/PSPKG-OPEN%20WEBSITE-26364F?style=for-the-badge)](https://pspkg.com/)
 
-PSPKG is listed as an external catalogue reference. The library can provide a clearly labelled link to the source website and, where permitted, display independently verified catalogue metadata. A website listing alone does not prove that a commercial game package is authorized for redistribution.
+PSPKG is listed as an external catalogue reference. The catalogue also includes official PlayStation Store references for commercial PS4 titles such as EA SPORTS FC 27, Grand Theft Auto V, Red Dead Redemption 2, and God of War Ragnarök. The library can provide a clearly labelled link to the source website and, where permitted, display independently verified catalogue metadata. A website listing alone does not prove that a commercial game package is authorized for redistribution.
 
 **Direct package downloads inside MESUT PS4 STORE will be enabled only for homebrew, publisher-authorized files, or packages supplied by users who have the necessary rights.** The project will not mirror unauthorized commercial games, defeat access controls, or automate protected download flows.
 
