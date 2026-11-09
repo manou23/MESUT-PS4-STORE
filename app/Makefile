@@ -20,7 +20,7 @@ $(INTDIR)/main.o: $(PROJDIR)/main.cpp $(PROJDIR)/catalog_generated.h | $(INTDIR)
 eboot.bin: $(INTDIR)/main.o
 	$(LD) $^ -o $(INTDIR)/MESUTPS4Store.elf $(LDFLAGS)
 	$(TOOLCHAIN)/bin/linux/create-fself -in=$(INTDIR)/MESUTPS4Store.elf -out=$(INTDIR)/MESUTPS4Store.oelf --eboot eboot.bin --paid 0x3800000000000011
-$(CONTENT_ID).pkg: eboot.bin
+$(CONTENT_ID).pkg: eboot.bin ../data/catalog.json $(PROJDIR)/catalog_generated.h
 	mkdir -p data
 	cp ../data/catalog.json data/catalog.json
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core sfo_new sce_sys/param.sfo
