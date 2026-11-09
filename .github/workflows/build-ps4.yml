@@ -1,0 +1,57 @@
+name: Build PS4 PKG
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - ".github/workflows/build-ps4.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Install host dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake ninja-build curl tar clang lld
+
+      - name: Download OpenOrbis Toolchain v0.5.4
+        run: |
+          mkdir -p "$HOME/OpenOrbisSDK"
+          curl -fL --retry 3 "https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/v0.5.4/toolchain-llvm-18.tar.gz" -o /tmp/openorbis.tar.gz
+          echo "3c7cd5bb593ca74fa1c13fd59f3938dc0fc07985167f7275063019e63abe4526  /tmp/openorbis.tar.gz" | sha256sum -c -
+          tar -xzf /tmp/openorbis.tar.gz -C "$HOME/OpenOrbisSDK"
+          echo "OO_PS4_TOOLCHAIN=$HOME/OpenOrbisSDK" >> "$GITHUB_ENV"
+          echo "$HOME/OpenOrbisSDK/bin/linux" >> "$GITHUB_PATH"
+          chmod +x "$HOME"/OpenOrbisSDK/bin/linux/*
+
+      - name: Build SDL2 for OpenOrbis
+        run: |
+          git clone --depth 1 https://github.com/OpenOrbis/SDL-PS4.git SDL-PS4
+          cmake -S SDL-PS4 -B SDL-PS4/orbis -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/SDL-PS4/cmake/openorbis.cmake" -DCMAKE_BUILD_TYPE=Release -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TEST=OFF
+          cmake --build SDL-PS4/orbis --parallel 2
+          find SDL-PS4/orbis -name 'libSDL2.a' -print -quit | grep -q .
+          cp "$(find SDL-PS4/orbis -name 'libSDL2.a' -print -quit)" "$OO_PS4_TOOLCHAIN/lib/libSDL2.a"
+
+      - name: Build native application and package
+        working-directory: app
+        run: |
+          make clean
+          make
+          test -s "IV0000-MSTP00001_00-MESUTPS4STORE0001.pkg"
+
+      - name: Upload PKG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MESUT-PS4-STORE-1.0.0
+          path: app/IV0000-MSTP00001_00-MESUTPS4STORE0001.pkg
+          if-no-files-found: error
+          retention-days: 14
