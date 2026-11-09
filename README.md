@@ -6,7 +6,7 @@
 
 **A native, controller-first homebrew library for PlayStation 4**
 
-[![Version](https://img.shields.io/badge/version-1.0.0-0878D1?style=for-the-badge)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.0.1-0878D1?style=for-the-badge)](CHANGELOG.md)
 [![Platform](https://img.shields.io/badge/platform-PLAYSTATION%204-151B2B?style=for-the-badge)](#)
 [![Build](https://img.shields.io/github/actions/workflow/status/manou23/MESUT-PS4-STORE/build-ps4.yml?branch=main&style=for-the-badge&label=BUILD)](https://github.com/manou23/MESUT-PS4-STORE/actions/workflows/build-ps4.yml)
 [![License](https://img.shields.io/badge/license-MIT-2E9D69?style=for-the-badge)](LICENSE)
@@ -43,7 +43,7 @@ The goal is to bring discovery, organization, and authorized package management 
 
 | Feature | Development status |
 |---|---|
-| Native PS4 application foundation | In development |
+| Native PS4 application foundation | CI build successful; real-console test pending |
 | TV-first 1920 × 1080 interface | Initial UI added |
 | DualShock 4 navigation | Basic input foundation added |
 | Retail PS4 game discovery shelf | 12 curated titles generated from catalogue manifest |
@@ -51,7 +51,7 @@ The goal is to bring discovery, organization, and authorized package management 
 | Controller-browsable game lists and detail panels | Initial native screens added |
 | Runtime JSON catalogue reader and PKG manifest bundling | Implemented in source; CI verification pending |
 | Runtime JSON browsing | Implemented in source; CI verification pending |\n| Search and filters | Planned |
-| Favorites and download queue | Planned |
+| Favorites and authorized download queue | Planned |
 | Arabic RTL + English interface | Planned |
 | Authorized PKG download manager | Planned |
 | Package verification and integrity checks | Planned |
