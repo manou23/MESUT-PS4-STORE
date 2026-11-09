@@ -70,7 +70,7 @@ The commercial-game discovery shelf uses official [PlayStation Store](https://st
 
 **Direct package downloads inside MESUT PS4 STORE will be enabled only for homebrew, publisher-authorized files, or packages supplied by users who have the necessary rights.** A listing or a working PKG on modified hardware does not by itself establish permission to redistribute a commercial game.
 
-Read the [content and source policy](docs/CONTENT_POLICY.md) and [Brewology integration notes](docs/BREWOLOGY_INTEGRATION.md).
+Read the [AI self-repair architecture](docs/AI_SELF_REPAIR.md), [content and source policy](docs/CONTENT_POLICY.md) and [Brewology integration notes](docs/BREWOLOGY_INTEGRATION.md).
 ## 🎨 Design direction
 
 - Midnight navy interface with PlayStation-blue accents.
@@ -113,7 +113,7 @@ Read the [content and source policy](docs/CONTENT_POLICY.md) and [Brewology inte
 
 Every code change can be built through [GitHub Actions](https://github.com/manou23/MESUT-PS4-STORE/actions/workflows/build-ps4.yml). Successful workflow artifacts are temporary CI outputs; stable user downloads will be published through GitHub Releases after validation.
 
-**Current package version:** 1.0.1 — development build. Persistent favorites are the next in-progress source update.
+**Current package version:** 1.0.2 — development build. Local diagnostic logging is implemented; cloud AI-assisted repair is designed but not yet connected to a deployed backend.
 
 - [View latest workflow run](https://github.com/manou23/MESUT-PS4-STORE/actions)
 - [Download published releases](https://github.com/manou23/MESUT-PS4-STORE/releases)
