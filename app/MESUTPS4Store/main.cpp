@@ -64,7 +64,6 @@ static void loadCatalog(){
   }
   else if(ch==']'&&depth==0)break;
  }
-}
  logDiagnostic("INFO",std::string("catalog loaded: retail=")+std::to_string(retailCatalog.size())+", homebrew="+std::to_string(homebrewCatalog.size()));
 }
 static void loadFavorites(){
