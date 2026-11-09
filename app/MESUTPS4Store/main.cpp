@@ -80,6 +80,18 @@ static void render(SDL_Renderer*r){
  text(r,82,52,"MESUT PS4 STORE",5,white);
  text(r,84,105,"PS4 GAME DISCOVERY AND HOME LIBRARY",2,muted);
  rect(r,1500,58,330,58,{22,35,54,255}); text(r,1530,78,"DUALSHOCK READY",2,white);
+ if(section>=3){
+  const char* heading=section==3?"TOOLS":(section==4?"MY PACKAGES":"FAVORITES");
+  const char* note=section==3?"SYSTEM UTILITIES WILL BE ADDED AFTER API VALIDATION":(section==4?"LOCAL PKG SCANNING AND USB IMPORT ARE NEXT": "SAVE AND MANAGE YOUR FAVORITE CATALOG ITEMS");
+  text(r,84,185,heading,3,white);
+  rect(r,80,285,1760,430,{17,39,67,255}); rect(r,80,285,10,430,blue);
+  text(r,135,365,"MESUT STORE",4,white);
+  text(r,138,455,"SECTION INITIALIZED",2,{167,205,240,255});
+  text(r,138,520,note,2,muted);
+  text(r,138,625,"THIS FEATURE IS NOT ACTIVE IN BUILD 1.0.0 YET",2,muted);
+  text(r,85,990,"O BACK TO CATEGORIES",2,muted);
+  return;
+ }
  if(section>0){
   const bool retail=(section==1);
   const std::vector<CatalogEntry>& entries=catalogFor(section);
@@ -164,12 +176,12 @@ int main(int argc,char**argv){
      case SDLK_RIGHT:case SDLK_d:if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;break;
      case SDLK_UP:if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+n-1)%n;}break;
      case SDLK_DOWN:if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+1)%n;}break;
-     case SDLK_RETURN:case SDLK_x:if(section==0){section=selected==0?1:(selected==1?2:0);item=0;detail=false;}else detail=!detail;break;
+     case SDLK_RETURN:case SDLK_x:if(section==0){section=selected+1;item=0;detail=false;}else detail=!detail;break;
 
     }
    }
    if(e.type==SDL_JOYBUTTONDOWN){
-    if(e.jbutton.button==0){if(section==0){section=selected==0?1:(selected==1?2:0);item=0;detail=false;}else detail=!detail;}
+    if(e.jbutton.button==0){if(section==0){section=selected+1;item=0;detail=false;}else detail=!detail;}
     if(e.jbutton.button==1){if(section>0){if(detail)detail=false;else{section=0;item=0;}}}
     if(e.jbutton.button==4){if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+n-1)%n;}else if(section==0)selected=(selected+4)%5;}
     if(e.jbutton.button==5){if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;}
