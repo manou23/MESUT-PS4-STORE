@@ -15,7 +15,7 @@ static Tile games[] = {
  {"FAVORITES","SAVED ITEMS",{150,88,30,255}}
 };
 static int selected=0, section=0;
-static bool arabic=false;
+
 static SDL_Color white={245,248,255,255}, muted={160,176,198,255}, blue={0,112,209,255};
 static void rect(SDL_Renderer*r,int x,int y,int w,int h,SDL_Color c){
  SDL_Rect q={x,y,w,h}; SDL_SetRenderDrawColor(r,c.r,c.g,c.b,c.a); SDL_RenderFillRect(r,&q);
@@ -39,8 +39,8 @@ static void render(SDL_Renderer*r){
  rect(r,0,0,W,H,{9,15,28,255});
  rect(r,0,0,W,7,blue);
  text(r,82,52,"MESUT PS4 STORE",5,white);
- text(r,84,105,arabic?"ARABIC MODE":"HOME BREW AND COMMUNITY LIBRARY",2,muted);
- rect(r,1500,58,330,58,{22,35,54,255}); text(r,1530,78,arabic?"ARABIC":"LANGUAGE",2,white);
+ text(r,84,105,"HOME BREW AND COMMUNITY LIBRARY",2,muted);
+ rect(r,1500,58,330,58,{22,35,54,255}); text(r,1530,78,"ENGLISH PREVIEW",2,white);
  text(r,84,190,"DISCOVER",3,white);
  text(r,84,245,"A STORE EXPERIENCE BUILT FOR YOUR CONSOLE",2,muted);
  // Featured banner
@@ -85,7 +85,7 @@ int main(int argc,char**argv){
      case SDLK_LEFT:case SDLK_a:selected=(selected+4)%5;break;
      case SDLK_RIGHT:case SDLK_d:selected=(selected+1)%5;break;
      case SDLK_RETURN:case SDLK_x:section=selected+1;break;
-     case SDLK_l:arabic=!arabic;break;
+
     }
    }
    if(e.type==SDL_JOYBUTTONDOWN){
@@ -93,7 +93,7 @@ int main(int argc,char**argv){
     if(e.jbutton.button==1)section=0;
     if(e.jbutton.button==4)selected=(selected+4)%5;
     if(e.jbutton.button==5)selected=(selected+1)%5;
-    if(e.jbutton.button==9)arabic=!arabic;
+
    }
    if(e.type==SDL_JOYAXISMOTION&&SDL_GetTicks()-lastMove>180){
     if(e.jaxis.axis==0&&e.jaxis.value>16000){selected=(selected+1)%5;lastMove=SDL_GetTicks();}
