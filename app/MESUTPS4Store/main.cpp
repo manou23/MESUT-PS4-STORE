@@ -123,10 +123,11 @@ static void render(SDL_Renderer*r){
    text(r,138,520,"PRESS TRIANGLE OR F TO REMOVE FROM FAVORITES",2,muted);
    text(r,138,625,"O / BACK RETURNS TO THE FAVORITES LIST",2,muted);
   }else{
-   for(int i=0;i<10&&i<(int)entries.size();i++){
-    int y=292+i*62; rect(r,90,y,1740,52,i==item?SDL_Color{18,75,130,255}:SDL_Color{17,27,43,255});
-    text(r,122,y+17,entries[i].title.c_str(),2,white);
-    text(r,1500,y+18,entries[i].type=="commercial_game"?"RETAIL TITLE":"HOMEBREW",1,{167,205,240,255});
+   int first=item>=10?item-9:0;
+   for(int i=0;i<10&&first+i<(int)entries.size();i++){
+    int idx=first+i; int y=292+i*62; rect(r,90,y,1740,52,idx==item?SDL_Color{18,75,130,255}:SDL_Color{17,27,43,255});
+    text(r,122,y+17,entries[idx].title.c_str(),2,white);
+    text(r,1500,y+18,entries[idx].type=="commercial_game"?"RETAIL TITLE":"HOMEBREW",1,{167,205,240,255});
    }
   }
   text(r,85,990,"UP DOWN SELECT     X DETAILS     TRIANGLE REMOVE     O BACK",2,muted);
@@ -228,9 +229,9 @@ int main(int argc,char**argv){
     switch(e.key.keysym.sym){
      case SDLK_ESCAPE:if(section>0){section=0;detail=false;item=0;}else running=false;break; case SDLK_BACKSPACE:if(section>0){if(detail)detail=false;else{section=0;item=0;}}else running=false;break;
      case SDLK_LEFT:case SDLK_a:if(section>0&&!detail){int n=countForSection(section);item=(item+n-1)%n;}else if(section==0)selected=(selected+4)%5;break;
-     case SDLK_RIGHT:case SDLK_d:if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;break;
-     case SDLK_UP:if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+n-1)%n;}break;
-     case SDLK_DOWN:if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+1)%n;}break;
+     case SDLK_RIGHT:case SDLK_d:if(section>0&&!detail){int n=countForSection(section);if(n>0)item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;break;
+     case SDLK_UP:if(section>0&&!detail){int n=countForSection(section);if(n>0)item=(item+n-1)%n;}break;
+     case SDLK_DOWN:if(section>0&&!detail){int n=countForSection(section);if(n>0)item=(item+1)%n;}break;
      case SDLK_RETURN:case SDLK_x:if(section==0){section=selected+1;item=0;detail=false;}else if(section==5){if(item<(int)favoriteCatalog.size())detail=!detail;}else detail=!detail;break;
      case SDLK_f:case SDLK_y:if(section==1||section==2){const auto& list=catalogFor(section);if(item<(int)list.size())toggleFavorite(list[item]);}else if(section==5&&item<(int)favoriteCatalog.size()){toggleFavorite(favoriteCatalog[item]);if(item>=(int)favoriteCatalog.size())item=(int)favoriteCatalog.size()-1;if(item<0)item=0;}break;
 
@@ -240,7 +241,7 @@ int main(int argc,char**argv){
     if(e.jbutton.button==0){if(section==0){section=selected+1;item=0;detail=false;}else detail=!detail;}
     if(e.jbutton.button==3){if(section==1||section==2){const auto& list=catalogFor(section);if(item<(int)list.size())toggleFavorite(list[item]);}else if(section==5&&item<(int)favoriteCatalog.size()){toggleFavorite(favoriteCatalog[item]);if(item>=(int)favoriteCatalog.size())item=(int)favoriteCatalog.size()-1;if(item<0)item=0;}}
     if(e.jbutton.button==1){if(section>0){if(detail)detail=false;else{section=0;item=0;}}}
-    if(e.jbutton.button==4){if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+n-1)%n;}else if(section==0)selected=(selected+4)%5;}
+    if(e.jbutton.button==4){if(section>0&&!detail){int n=countForSection(section);if(n>0)item=(item+n-1)%n;}else if(section==0)selected=(selected+4)%5;}
     if(e.jbutton.button==5){if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;}
 
    }
