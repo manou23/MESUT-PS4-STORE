@@ -47,6 +47,9 @@ jobs:
       - name: Build SDL2 for OpenOrbis
         run: |
           git clone --depth 1 https://github.com/OpenOrbis/SDL-PS4.git SDL-PS4
+          # The upstream helper uses a Clang-internal flag unsupported by Ubuntu's Clang 14.
+          # Keep the same unwind-table behavior with the portable driver flag.
+          sed -i 's/-Xclang -munwind-tables/-funwind-tables/' SDL-PS4/cmake/oosdk.cmake
           cmake -S SDL-PS4 -B SDL-PS4/orbis -G Ninja \
             -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/SDL-PS4/cmake/oosdk.cmake" \
             -DCMAKE_BUILD_TYPE=Release -DSDL_SHARED=OFF -DSDL_STATIC=ON -DSDL_TEST=OFF
