@@ -40,7 +40,7 @@ jobs:
         run: |
           curl -fL --retry 3 "https://github.com/OpenOrbis/create-gp4/releases/latest/download/binaries.tar.gz" -o /tmp/create-gp4.tar.gz
           tar -xzf /tmp/create-gp4.tar.gz -C "$OO_PS4_TOOLCHAIN"
-          curl -fL --retry 3 "https://github.com/maxton/LibOrbisPkg/releases/download/0.2.231/PkgTool.Core-linux-x64-0.2.231.zip" -o /tmp/pkgtool.zip
+          curl -fL --retry 3 "https://github.com/maxton/LibOrbisPkg/releases/download/v0.2/PkgTool.Core-0.2.231.zip" -o /tmp/pkgtool.zip
           unzip -o /tmp/pkgtool.zip -d "$OO_PS4_TOOLCHAIN/bin/linux"
           chmod +x "$OO_PS4_TOOLCHAIN/bin/linux/"*
 
