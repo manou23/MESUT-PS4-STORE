@@ -90,13 +90,15 @@ static void render(SDL_Renderer*r){
  rect(r,1500,58,330,58,{22,35,54,255}); text(r,1530,78,"DUALSHOCK READY",2,white);
  if(section>0){
   const bool retail=(section==1);
-  const int count=retail?(int)(sizeof(retailGames)/sizeof(retailGames[0])):(int)(sizeof(homebrewGames)/sizeof(homebrewGames[0]));
-  const char** list=retail?retailGames:homebrewGames;
+  const std::vector<CatalogEntry>& entries=catalogFor(section);
+  const int fallbackCount=retail?(int)(sizeof(retailGames)/sizeof(retailGames[0])):(int)(sizeof(homebrewGames)/sizeof(homebrewGames[0]));
+  const int count=entries.empty()?fallbackCount:(int)entries.size();
+  auto titleAt=[&](int idx)->const char*{return entries.empty()?(retail?retailGames[idx]:homebrewGames[idx]):entries[idx].title.c_str();};
   text(r,84,185,retail?"POPULAR PS4 GAMES":"PS4 HOMEBREW GAMES",3,white);
   text(r,86,232,retail?"COMMERCIAL TITLES - OFFICIAL STORE REFERENCES":"COMMUNITY PORTS - CHECK GAME DATA REQUIREMENTS",2,muted);
   if(detail){
    rect(r,80,300,1760,560,{17,39,67,255}); rect(r,80,300,10,560,blue);
-   text(r,135,365,list[item],4,white);
+   text(r,135,365,titleAt(item),4,white);
    if(retail){
     text(r,138,455,"COMMERCIAL PS4 TITLE",2,{167,205,240,255});
     text(r,138,510,item==1?"FREE LIMITED PREVIEW - OFFICIAL STORE":"OFFICIAL STORE REFERENCE ONLY",2,white);
@@ -116,7 +118,7 @@ static void render(SDL_Renderer*r){
     int y=292+i*62;
     SDL_Color c=(idx==item)?SDL_Color{18,75,130,255}:SDL_Color{17,27,43,255};
     rect(r,90,y,1740,52,c);
-    text(r,122,y+17,list[idx],2,white);
+    text(r,122,y+17,titleAt(idx),2,white);
     if(retail) text(r,1470,y+18,idx==1?"FREE PREVIEW":"RETAIL TITLE",1,{167,205,240,255});
     else text(r,1470,y+18,"HOMEBREW",1,{167,205,240,255});
    }
@@ -157,6 +159,7 @@ int main(int argc,char**argv){
  if(!r){SDL_DestroyWindow(w);SDL_Quit();return 3;}
  SDL_Joystick*joy=nullptr;
  if(SDL_NumJoysticks()>0)joy=SDL_JoystickOpen(0);
+ loadCatalog();
  bool running=true; Uint32 lastMove=0;
  while(running){
   SDL_Event e;
@@ -165,10 +168,10 @@ int main(int argc,char**argv){
    if(e.type==SDL_KEYDOWN){
     switch(e.key.keysym.sym){
      case SDLK_ESCAPE:if(section>0){section=0;detail=false;item=0;}else running=false;break; case SDLK_BACKSPACE:if(section>0){if(detail)detail=false;else{section=0;item=0;}}else running=false;break;
-     case SDLK_LEFT:case SDLK_a:if(section>0&&!detail){int n=section==1?12:7;item=(item+n-1)%n;}else if(section==0)selected=(selected+4)%5;break;
-     case SDLK_RIGHT:case SDLK_d:if(section>0&&!detail){int n=section==1?12:7;item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;break;
-     case SDLK_UP:if(section>0&&!detail){int n=section==1?12:7;item=(item+n-1)%n;}break;
-     case SDLK_DOWN:if(section>0&&!detail){int n=section==1?12:7;item=(item+1)%n;}break;
+     case SDLK_LEFT:case SDLK_a:if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+n-1)%n;}else if(section==0)selected=(selected+4)%5;break;
+     case SDLK_RIGHT:case SDLK_d:if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;break;
+     case SDLK_UP:if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+n-1)%n;}break;
+     case SDLK_DOWN:if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+1)%n;}break;
      case SDLK_RETURN:case SDLK_x:if(section==0){section=selected==0?1:(selected==1?2:0);item=0;detail=false;}else detail=!detail;break;
 
     }
@@ -176,8 +179,8 @@ int main(int argc,char**argv){
    if(e.type==SDL_JOYBUTTONDOWN){
     if(e.jbutton.button==0){if(section==0){section=selected==0?1:(selected==1?2:0);item=0;detail=false;}else detail=!detail;}
     if(e.jbutton.button==1){if(section>0){if(detail)detail=false;else{section=0;item=0;}}}
-    if(e.jbutton.button==4){if(section>0&&!detail){int n=section==1?12:7;item=(item+n-1)%n;}else if(section==0)selected=(selected+4)%5;}
-    if(e.jbutton.button==5){if(section>0&&!detail){int n=section==1?12:7;item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;}
+    if(e.jbutton.button==4){if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+n-1)%n;}else if(section==0)selected=(selected+4)%5;}
+    if(e.jbutton.button==5){if(section>0&&!detail){int n=section==1?(retailCatalog.empty()?12:(int)retailCatalog.size()):(homebrewCatalog.empty()?7:(int)homebrewCatalog.size());item=(item+1)%n;}else if(section==0)selected=(selected+1)%5;}
 
    }
    if(e.type==SDL_JOYAXISMOTION&&SDL_GetTicks()-lastMove>180){
