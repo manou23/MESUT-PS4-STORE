@@ -141,6 +141,25 @@ Help us validate MESUT PS4 STORE with clear, reproducible feedback. **Real-conso
 
 We welcome feedback about installation, startup, controller navigation, TV readability, performance, catalogue accuracy, and accessibility. Please include the exact build, firmware, environment, and reproduction steps. Never post account credentials, console identifiers, private tokens, or copyrighted game packages.
 
+## 💬 Community Discussions
+
+The MESUT PS4 STORE community is now open on GitHub Discussions. Join the conversation, ask questions, share ideas, and follow project announcements.
+
+<div align="center">
+
+[**💬 OPEN COMMUNITY DISCUSSIONS**](https://github.com/manou23/MESUT-PS4-STORE/discussions)
+
+</div>
+
+Use the discussion categories to keep conversations organized:
+- **Announcements** — official project news and release updates.
+- **General** — community conversation.
+- **Ideas** — feature concepts and product feedback.
+- **Q&A** — technical questions and help.
+- **Show and tell** — demos, screenshots, and community contributions.
+
+For reproducible defects, please use the [bug report form](https://github.com/manou23/MESUT-PS4-STORE/issues/new?template=bug_report.yml) rather than a general discussion. For security-sensitive reports, follow [SECURITY.md](SECURITY.md).
+
 ## 🤝 Contributing
 
 Bug reports, tested fixes, and improvements are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting changes.
