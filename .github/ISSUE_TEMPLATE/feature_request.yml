@@ -1,0 +1,46 @@
+name: Feature request
+description: Suggest a practical improvement or new capability
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "Describe the user problem first. Suggestions are reviewed against the project's scope, safety, compatibility, and maintenance cost."
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem should this solve?
+      placeholder: "When using the app on a TV..."
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      placeholder: "A clear description of the behavior you would like."
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: How important is this to your workflow?
+      options:
+        - Critical blocker
+        - High value
+        - Useful improvement
+        - Nice to have
+    validations:
+      required: true
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Project policy
+      options:
+        - label: I understand that commercial game packages will only be distributed when redistribution is authorized.
+          required: true
