@@ -30,6 +30,6 @@ $(CONTENT_ID).pkg: eboot.bin
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core pkg_build pkg.gp4 . || { test -s '$(CONTENT_ID).pkg' || exit 1; }
 	$(TOOLCHAIN)/bin/linux/PkgTool.Core pkg_validate '$(CONTENT_ID).pkg' > pkg-validation.log
 	cat pkg-validation.log
-	! grep -Fq '[ERROR]' pkg-validation.log || { cat pkg-validation.log; exit 1; }
+	if grep -Fq '[ERROR]' pkg-validation.log; then cat pkg-validation.log; exit 1; fi
 clean:
 	rm -rf $(INTDIR) eboot.bin pkg.gp4 $(CONTENT_ID).pkg sce_sys/param.sfo
